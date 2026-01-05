@@ -9,10 +9,13 @@ TARGET = gomoku
 # 3. 手动列出所有子目录中的 .o 文件（匹配你图片中的实际路径）
 # 注意：路径必须和文件浏览器里的一致
 OBJS = Main/main.o \
+       Bancheck/bancheck.o \
        Boardprint/boardprint.o \
        Boardprint/boardreset.o \
+	   Boardprint/emptyboradprint.o \
        Bancheck/bancheck.o \
-       Mark/mark.o
+       Mark/mark.o \
+	   Wincheck/wincheck.o
 
 # 4. 默认规则：链接
 $(TARGET): $(OBJS)

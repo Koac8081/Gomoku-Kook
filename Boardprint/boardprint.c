@@ -2,8 +2,8 @@
 #include<stdio.h>
 #include"../gomoku.h"
 
-void boardprint(int board[BOARDSIZE][BOARDSIZE],int row,char col){
-    printf("落子在:“%d%c”\n",row,col);
+void boardprint(int board[BOARDSIZE][BOARDSIZE],int row,char col){//使用了助教提供的棋盘打印函数，稍作修改
+    printf("落子在:%d %c\n",row,col);
     for(int i = 0; i < BOARDSIZE; i++){
         printf("%2d ", BOARDSIZE - i);
         for (int j = 0; j < BOARDSIZE; j++){
