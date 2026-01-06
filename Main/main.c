@@ -36,7 +36,6 @@ int main(){
         }
         if(gamemode == PVE){//PVE游戏进行
             printf("您选择了PVE模式\n");
-            emptyboardprint(board);
             printf("请选择您要成为黑方或白方:输入“1”使用黑棋进行游戏,输入“2”使用白棋进行游戏\n");
             while(1){//PVE黑白棋选择
                 if(scanf("%d",&playerchose) == 1){
@@ -58,9 +57,81 @@ int main(){
                     while(getchar() != '\n');
                 }
             }
+            printf("棋局开始\n");
+            emptyboardprint(board);
+            if(playerchose == PLAYERCHOSEBLACK){//玩家选择黑棋后的PVE游戏
+            while(gamestate == UNDERWAY){
+                    printf("请玩家落子-输入“行 列”,其中行为1-15的数字,列为A-O的大写字母\n");
+                    printf("当前黑棋（玩家）已落%d子,白棋（电脑）已落%d子\n",blackstep,whitestep);
+                    while(1){//玩家（黑棋）落子
+                goinger = BLACKGO;
+                if(scanf("%d %c",&row,&col) == 2){
+                    if(1 <= row && row <= BOARDSIZE && 1 <= col - 'A' + 1 && col - 'A' + 1 <= BOARDSIZE && board[BOARDSIZE - row][col - 'A'] == EMPTY){
+                        board[BOARDSIZE - row][col - 'A'] = BLACK;
+                        break;
+                    }
+                    else{
+                        printf("您选择的位置在不在棋盘范围或已经落子,请重新选择!\n");
+                        continue;
+                    }
+                }
+                else{
+                    printf("输入格式有误,请重新输入!\n");
+                    while(getchar() != '\n');
+                }
+            }
+            boardprint(board,row,col);
+            blackstep++;
+            wincheck(board,goinger,row,col,blackstep,whitestep);
+            if(gamestate == BLACKWIN){
+                printf("玩家胜利！\n重新开始游戏\n");
+                break;
+            }
+            else if(gamestate == PEACE){
+                printf("平局！\n重新开始游戏\n");
+                break;
+            }
+        }
+        
+    }
+            else{//玩家选择白棋后的PVP游戏
+                while(gamestate == UNDERWAY){
+                    printf("请玩家落子-输入“行 列”,其中行为1-15的数字,列为A-O的大写字母\n");
+                    printf("当前黑棋（电脑）已落%d子,白棋（玩家）已落%d子\n",blackstep,whitestep);
+                    while(1){//玩家（白棋）落子
+                goinger = WHITEGO;
+                if(scanf("%d %c",&row,&col) == 2){
+                    if(1 <= row && row <= BOARDSIZE && 1 <= col - 'A' + 1 && col - 'A' + 1 <= BOARDSIZE && board[BOARDSIZE - row][col - 'A'] == EMPTY){
+                        board[BOARDSIZE - row][col - 'A'] = WHITE;
+                        break;
+                    }
+                    else{
+                        printf("您选择的位置在不在棋盘范围或已经落子,请重新选择!\n");
+                        continue;
+                    }
+                }
+                else{
+                    printf("输入格式有误,请重新输入!\n");
+                    while(getchar() != '\n');
+                }
+            }
+            boardprint(board,row,col);
+            whitestep++;
+            wincheck(board,goinger,row,col,blackstep,whitestep);
+            if(gamestate == WHITEWIN){
+                printf("玩家胜利！\n重新开始游戏\n");
+                break;
+            }
+            else if(gamestate == PEACE){
+                printf("平局！\n重新开始游戏\n");
+                break;
+            }
+        }
+            }
         }
         if(gamemode == PVP){//PVP游戏进行
             printf("您选择了PVP模式\n");
+            printf("棋局开始\n");
             emptyboardprint(board);
             while(gamestate == UNDERWAY){
             printf("请黑方落子-输入“行 列”,其中行为1-15的数字,列为A-O的大写字母\n");

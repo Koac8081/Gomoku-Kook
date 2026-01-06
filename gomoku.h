@@ -4,7 +4,8 @@
 #define WHITE 1 //白棋
 #define BLACK 2 //黑棋
 
-#define BOARDSIZE 15 //棋盘大
+#define BOARDSIZE 15 //棋盘大小
+#define MAXSTEP 225 //最大步数
 
 #define PVP 1 //人人对战
 #define PVE 2 //人机对战
@@ -30,10 +31,22 @@ extern int blackstep; //黑棋至今步数
 extern int whitestep; //白棋至今步数
 extern int playerchose; //PVE模式中玩家选择的一方
 
+extern int blackfive; //黑棋下在此处形成的五连数
+extern int whitefive; //白棋下在此处形成的五连数
+extern int blackfiveplus; //黑棋下在此处形成的长连数
+extern int whitefiveplus; //白棋下在此处形成的长连数
+
+extern int targetrow; //检索棋盘时的目标行坐标
+extern int targetcol; //检索棋盘时的目标纵坐标
+
 void boardprint(int board[BOARDSIZE][BOARDSIZE],int row,char col); //棋盘打印及更新
 void boardreset(int board[BOARDSIZE][BOARDSIZE]); //重置棋盘
 void emptyboardprint(int board[BOARDSIZE][BOARDSIZE]); //打印空棋盘
+
 void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int blackstep,int whitestep); //检查是否有一方胜利或平局
+
+void fivecheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int targetcol);  //检查下在此处的五连数
+void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int targetcol); //检查下在此处的长连数
 
 /*
 15 ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐

@@ -1,15 +1,18 @@
-//检查是否有一方胜利或平局
+//用于判断下在此处可形成的长连数
+
 #include<stdio.h>
 #include"../gomoku.h"
 
-void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int blackstep,int whitestep){
-    int realrow = BOARDSIZE - row;
-    int realcol = col - 'A';
-    if(goinger == BLACKGO && blackstep + whitestep < 225){//黑棋下完一步后，检索是否胜利
+int blackfiveplus = 0;
+int whitefiveplus = 0;
+
+void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int targetcol){
+    int target = BLACK;//检索目标
+    if(target == BLACK){//黑棋检索
         //先纵向检索
         int colnum_up = 0;//向上连子数
         while(1){
-            if(realrow - colnum_up - 1 >= 0 && board[realrow - colnum_up - 1][realcol] == BLACK){
+            if(targetrow - colnum_up - 1 >= 0 && board[targetrow - colnum_up - 1][targetcol] == BLACK){
             colnum_up ++;
             }
             else{
@@ -18,97 +21,7 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
         }
         int colnum_down = 0;//向下连子数
         while(1){
-            if(realrow + colnum_down + 1 <= 14 && board[realrow + colnum_down + 1][realcol] == BLACK){
-            colnum_down ++;
-            }
-            else{
-                break;
-            }
-        }
-        if(colnum_down + colnum_up + 1 == 5){
-            gamestate = BLACKWIN;
-        }
-        //再横向检索
-        int rownum_left = 0;//向左连子数
-        while(1){
-            if(realcol - rownum_left - 1 >= 0 && board[realrow][realcol - rownum_left - 1] == BLACK){
-            rownum_left ++;
-            }
-            else{
-                break;
-            }
-        }
-        int rownum_right = 0;//向右连子数
-        while(1){
-            if(realcol + rownum_right + 1 <= 14 && board[realrow][realcol + rownum_right + 1] == BLACK){
-                rownum_right ++;
-            }
-            else{
-                break;
-            }
-        }
-        if(rownum_left + rownum_right + 1 == 5){
-            gamestate = BLACKWIN;
-        }
-        //再向45°-225°方向检索
-        int rightup = 0;//右上连子数
-        while(1){
-            if(realrow - rightup - 1 >= 0 && realcol + rightup + 1 <= 14 && board[realrow - rightup - 1][realcol + rightup + 1] == BLACK){
-                rightup ++;
-            }
-            else{
-                break;
-            }
-        }
-        int leftdown = 0;//左下连子数
-        while(1){
-            if(realrow + leftdown + 1 <= 14 && realcol - leftdown - 1 >= 0 && board[realrow + leftdown + 1][realcol - leftdown - 1] == BLACK){
-                leftdown ++;
-            }
-            else{
-                break;
-            }
-        }
-        if(rightup + leftdown + 1 == 5){
-            gamestate = BLACKWIN;
-        }
-        //再向135°-315°方向检索
-        int rightdown = 0;//右下连子数
-        while(1){
-            if(realrow + rightdown + 1 <= 14 && realcol + rightdown + 1 <= 14 && board[realrow + rightdown + 1][realcol + rightdown + 1] == BLACK){
-                rightdown ++;
-            }
-            else{
-                break;
-            }
-        }
-        int leftup = 0;
-        while(1){
-            if(realrow - leftup - 1 >= 0 && realcol - leftup - 1 >= 0 && board[realrow - leftup - 1][realcol - leftup - 1] == BLACK){
-                leftup ++;
-            }
-            else{
-                break;
-            }
-        }
-        if(rightdown + leftup + 1 == 5){
-            gamestate = BLACKWIN;
-        }
-    }
-    else if(goinger == WHITEGO && blackstep + whitestep < 225){//白棋下完一步后，检索是否胜利
-        //先纵向检索
-        int colnum_up = 0;//向上连子数
-        while(1){
-            if(realrow - colnum_up - 1 >= 0 && board[realrow - colnum_up - 1][realcol] == WHITE){
-            colnum_up ++;
-            }
-            else{
-                break;
-            }
-        }
-        int colnum_down = 0;//向下连子数
-        while(1){
-            if(realrow + colnum_down + 1 <= 14 && board[realrow + colnum_down + 1][realcol] == WHITE){
+            if(targetrow + colnum_down + 1 <= 14 && board[targetrow + colnum_down + 1][targetcol] == BLACK){
             colnum_down ++;
             }
             else{
@@ -116,12 +29,12 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
             }
         }
         if(colnum_down + colnum_up + 1 >= 5){
-            gamestate = WHITEWIN;
+            blackfiveplus ++;
         }
         //再横向检索
         int rownum_left = 0;//向左连子数
         while(1){
-            if(realcol - rownum_left - 1 >= 0 && board[realrow][realcol - rownum_left - 1] == WHITE){
+            if(targetcol - rownum_left - 1 >= 0 && board[targetrow][targetcol - rownum_left - 1] == BLACK){
             rownum_left ++;
             }
             else{
@@ -130,7 +43,7 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
         }
         int rownum_right = 0;//向右连子数
         while(1){
-            if(realcol + rownum_right + 1 <= 14 && board[realrow][realcol + rownum_right + 1] == WHITE){
+            if(targetcol + rownum_right + 1 <= 14 && board[targetrow][targetcol + rownum_right + 1] == BLACK){
                 rownum_right ++;
             }
             else{
@@ -138,12 +51,12 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
             }
         }
         if(rownum_left + rownum_right + 1 >= 5){
-            gamestate = WHITEWIN;
+            blackfiveplus++;
         }
         //再向45°-225°方向检索
         int rightup = 0;//右上连子数
         while(1){
-            if(realrow - rightup - 1 >= 0 && realcol + rightup + 1 <= 14 && board[realrow - rightup - 1][realcol + rightup + 1] == WHITE){
+            if(targetrow - rightup - 1 >= 0 && targetcol + rightup + 1 <= 14 && board[targetrow - rightup - 1][targetcol + rightup + 1] == BLACK){
                 rightup ++;
             }
             else{
@@ -152,7 +65,7 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
         }
         int leftdown = 0;//左下连子数
         while(1){
-            if(realrow + leftdown + 1 <= 14 && realcol - leftdown - 1 >= 0 && board[realrow + leftdown + 1][realcol - leftdown - 1] == WHITE){
+            if(targetrow + leftdown + 1 <= 14 && targetcol - leftdown - 1 >= 0 && board[targetrow + leftdown + 1][targetcol - leftdown - 1] == BLACK){
                 leftdown ++;
             }
             else{
@@ -160,12 +73,12 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
             }
         }
         if(rightup + leftdown + 1 >= 5){
-            gamestate = WHITEWIN;
+            blackfiveplus++;
         }
         //再向135°-315°方向检索
         int rightdown = 0;//右下连子数
         while(1){
-            if(realrow + rightdown + 1 <= 14 && realcol + rightdown + 1 <= 14 && board[realrow + rightdown + 1][realcol + rightdown + 1] == WHITE){
+            if(targetrow + rightdown + 1 <= 14 && targetcol + rightdown + 1 <= 14 && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == BLACK){
                 rightdown ++;
             }
             else{
@@ -174,7 +87,7 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
         }
         int leftup = 0;
         while(1){
-            if(realrow - leftup - 1 >= 0 && realcol - leftup - 1 >= 0 && board[realrow - leftup - 1][realcol - leftup - 1] == WHITE){
+            if(targetrow - leftup - 1 >= 0 && targetcol - leftup - 1 >= 0 && board[targetrow - leftup - 1][targetcol - leftup - 1] == BLACK){
                 leftup ++;
             }
             else{
@@ -182,10 +95,98 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
             }
         }
         if(rightdown + leftup + 1 >= 5){
-            gamestate = WHITEWIN;
+            blackfiveplus++;
         }
     }
-    else if(blackstep + whitestep == MAXSTEP){
-        gamestate = PEACE;
+    target = WHITE;
+    if(target == WHITE){//白棋检索
+        //先纵向检索
+        int colnum_up = 0;//向上连子数
+        while(1){
+            if(targetrow - colnum_up - 1 >= 0 && board[targetrow - colnum_up - 1][targetcol] == WHITE){
+            colnum_up ++;
+            }
+            else{
+                break;
+            }
+        }
+        int colnum_down = 0;//向下连子数
+        while(1){
+            if(targetrow + colnum_down + 1 <= 14 && board[targetrow + colnum_down + 1][targetcol] == WHITE){
+            colnum_down ++;
+            }
+            else{
+                break;
+            }
+        }
+        if(colnum_down + colnum_up + 1 >= 5){
+            whitefiveplus++;
+        }
+        //再横向检索
+        int rownum_left = 0;//向左连子数
+        while(1){
+            if(targetcol - rownum_left - 1 >= 0 && board[targetrow][targetcol - rownum_left - 1] == WHITE){
+            rownum_left ++;
+            }
+            else{
+                break;
+            }
+        }
+        int rownum_right = 0;//向右连子数
+        while(1){
+            if(targetcol + rownum_right + 1 <= 14 && board[targetrow][targetcol + rownum_right + 1] == WHITE){
+                rownum_right ++;
+            }
+            else{
+                break;
+            }
+        }
+        if(rownum_left + rownum_right + 1 >= 5){
+           whitefiveplus++;
+        }
+        //再向45°-225°方向检索
+        int rightup = 0;//右上连子数
+        while(1){
+            if(targetrow - rightup - 1 >= 0 && targetcol + rightup + 1 <= 14 && board[targetrow - rightup - 1][targetcol + rightup + 1] == WHITE){
+                rightup ++;
+            }
+            else{
+                break;
+            }
+        }
+        int leftdown = 0;//左下连子数
+        while(1){
+            if(targetrow + leftdown + 1 <= 14 && targetcol - leftdown - 1 >= 0 && board[targetrow + leftdown + 1][targetcol - leftdown - 1] == WHITE){
+                leftdown ++;
+            }
+            else{
+                break;
+            }
+        }
+        if(rightup + leftdown + 1 >= 5){
+            whitefiveplus++;
+        }
+        //再向135°-315°方向检索
+        int rightdown = 0;//右下连子数
+        while(1){
+            if(targetrow + rightdown + 1 <= 14 && targetcol + rightdown + 1 <= 14 && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == WHITE){
+                rightdown ++;
+            }
+            else{
+                break;
+            }
+        }
+        int leftup = 0;
+        while(1){
+            if(targetrow - leftup - 1 >= 0 && targetcol - leftup - 1 >= 0 && board[targetrow - leftup - 1][targetcol - leftup - 1] == WHITE){
+                leftup ++;
+            }
+            else{
+                break;
+            }
+        }
+        if(rightdown + leftup + 1 >= 5){
+            whitefiveplus++;
+        }
     }
 }

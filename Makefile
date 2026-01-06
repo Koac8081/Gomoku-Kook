@@ -15,6 +15,8 @@ OBJS = Main/main.o \
 	   Boardprint/emptyboradprint.o \
        Bancheck/bancheck.o \
        Mark/mark.o \
+	   Shapecheck/fivecheck.o \
+	   Shapecheck/fivepluscheck.o \
 	   Wincheck/wincheck.o
 
 # 4. 默认规则：链接
