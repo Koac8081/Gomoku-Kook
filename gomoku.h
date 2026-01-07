@@ -9,6 +9,7 @@
 
 #define PVP 1 //人人对战
 #define PVE 2 //人机对战
+#define DEBUG 3 //Debug模式
 
 #define UNDERWAY 0 //游戏进行中
 #define WHITEWIN 1 //白赢
@@ -35,6 +36,10 @@ extern int blackfive; //黑棋下在此处形成的五连数
 extern int whitefive; //白棋下在此处形成的五连数
 extern int blackfiveplus; //黑棋下在此处形成的长连数
 extern int whitefiveplus; //白棋下在此处形成的长连数
+extern int blacklivefour; //黑棋下在此处形成的活四数
+extern int whitelivefour; //白棋下在此处形成的活四数
+extern int blackchargefour; //黑棋下在此处形成的冲四数
+extern int whitechargefour; //白棋下在此处形成的冲四数
 
 extern int targetrow; //检索棋盘时的目标行坐标
 extern int targetcol; //检索棋盘时的目标纵坐标
@@ -45,8 +50,9 @@ void emptyboardprint(int board[BOARDSIZE][BOARDSIZE]); //打印空棋盘
 
 void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int blackstep,int whitestep); //检查是否有一方胜利或平局
 
-void fivecheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int targetcol);  //检查下在此处的五连数
-void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int targetcol); //检查下在此处的长连数
+void fivecheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol);  //检查下在此处的五连数
+void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //检查下在此处的长连数
+void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //检查下在此处的活四，冲四
 
 /*
 15 ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐

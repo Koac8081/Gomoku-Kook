@@ -6,7 +6,9 @@
 int blackfiveplus = 0;
 int whitefiveplus = 0;
 
-void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int targetcol){
+void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
+    blackfiveplus = 0;
+    whitefiveplus = 0;
     int target = BLACK;//检索目标
     if(target == BLACK){//黑棋检索
         //先纵向检索
@@ -28,7 +30,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int
                 break;
             }
         }
-        if(colnum_down + colnum_up + 1 >= 5){
+        if(colnum_down + colnum_up + 1 > 5){
             blackfiveplus ++;
         }
         //再横向检索
@@ -50,7 +52,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int
                 break;
             }
         }
-        if(rownum_left + rownum_right + 1 >= 5){
+        if(rownum_left + rownum_right + 1 > 5){
             blackfiveplus++;
         }
         //再向45°-225°方向检索
@@ -72,7 +74,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int
                 break;
             }
         }
-        if(rightup + leftdown + 1 >= 5){
+        if(rightup + leftdown + 1 > 5){
             blackfiveplus++;
         }
         //再向135°-315°方向检索
@@ -94,7 +96,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int
                 break;
             }
         }
-        if(rightdown + leftup + 1 >= 5){
+        if(rightdown + leftup + 1 > 5){
             blackfiveplus++;
         }
     }
@@ -119,7 +121,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int
                 break;
             }
         }
-        if(colnum_down + colnum_up + 1 >= 5){
+        if(colnum_down + colnum_up + 1 > 5){
             whitefiveplus++;
         }
         //再横向检索
@@ -141,7 +143,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int
                 break;
             }
         }
-        if(rownum_left + rownum_right + 1 >= 5){
+        if(rownum_left + rownum_right + 1 > 5){
            whitefiveplus++;
         }
         //再向45°-225°方向检索
@@ -163,7 +165,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int
                 break;
             }
         }
-        if(rightup + leftdown + 1 >= 5){
+        if(rightup + leftdown + 1 > 5){
             whitefiveplus++;
         }
         //再向135°-315°方向检索
@@ -185,7 +187,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int
                 break;
             }
         }
-        if(rightdown + leftup + 1 >= 5){
+        if(rightdown + leftup + 1 > 5){
             whitefiveplus++;
         }
     }

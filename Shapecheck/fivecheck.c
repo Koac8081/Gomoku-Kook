@@ -5,7 +5,9 @@
 int blackfive = 0;
 int whitefive = 0;
 
-void fivecheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int targetrow,int targetcol){
+void fivecheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
+    blackfive = 0;
+    whitefive = 0;
     int target = BLACK;//检索目标
     if(target == BLACK){//黑棋检索
         //先纵向检索
