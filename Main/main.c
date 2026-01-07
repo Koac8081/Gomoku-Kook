@@ -27,7 +27,7 @@ int main(){
                     break;
                 }
                 else{
-                printf("您输入了1或2以外的数字,请重新输入!\n");
+                printf("您输入了1、2或3以外的数字,请重新输入!\n");
                 continue;
                 }
         }
@@ -204,9 +204,9 @@ int main(){
             emptyboardprint(board);
             while(gamestate == UNDERWAY){
             while(1){
-            printf("请输入数组坐标,查看对此处的判断情况；输入“100 任意字母”退出查看\n");
+            printf("请输入坐标,查看对此处的判断情况；输入“0 任意字母”退出查看\n");
             scanf("%d %c",&row,&col);
-            if(row == 100){
+            if(row == 0){
                 break;
             }
             targetrow = BOARDSIZE - row;
@@ -222,7 +222,7 @@ int main(){
             printf("白棋连五:%d\n",whitefive);
             printf("黑棋长连:%d\n",blackfiveplus);
             printf("白棋长连:%d\n",whitefiveplus);
-        }
+    }
         printf("请黑方落子-输入“行 列”,其中行为1-15的数字,列为A-O的大写字母\n");
         printf("当前黑棋已落%d子,白棋已落%d子\n",blackstep,whitestep);
             while(1){//黑方落子
@@ -283,7 +283,7 @@ int main(){
                 printf("平局！\n重新开始游戏\n");
                 break;
             }
-        }
+    }
         }
     }
 }
