@@ -198,12 +198,12 @@ int main(){
             }
         }
         }
-        if(gamemode == DEBUG){
+        if(gamemode == DEBUG){//Debug模式，显示对棋型的判断
             printf("您选择了Debug模式\n");
             printf("棋局开始\n");
             emptyboardprint(board);
             while(gamestate == UNDERWAY){
-            while(1){
+            while(1){//开发者使用，不考虑输入错误
             printf("请输入坐标,查看对此处的判断情况；输入“0 任意字母”退出查看\n");
             scanf("%d %c",&row,&col);
             if(row == 0){
@@ -211,9 +211,14 @@ int main(){
             }
             targetrow = BOARDSIZE - row;
             targetcol = col - 'A';
+            twocheck(board,targetrow,targetcol);
             fourcheck(board,targetrow,targetcol);
             fivecheck(board,targetrow,targetcol);
             fivepluscheck(board,targetrow,targetcol);
+            printf("黑棋活二:%d\n",blacklivetwo);
+            printf("白棋活二:%d\n",whitelivetwo);
+            printf("黑棋眠二:%d\n",blacksleeptwo);
+            printf("白棋眠二:%d\n",whitesleeptwo);
             printf("黑棋活四:%d\n",blacklivefour);
             printf("白棋活四:%d\n",whitelivefour);
             printf("黑棋冲四:%d\n",blackchargefour);
@@ -286,4 +291,5 @@ int main(){
     }
         }
     }
+    return 0;
 }

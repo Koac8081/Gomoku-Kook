@@ -1,19 +1,18 @@
-//检查下在此处是否能形成活四,冲四
+//关于二连的判断
 
 #include<stdio.h>
 #include"../gomoku.h"
 
-int blacklivefour = 0;
-int whitelivefour = 0;
+int blacklivetwo;
+int whitelivetwo;
+int blacksleeptwo;
+int whitesleeptwo;
 
-int blackchargefour = 0;
-int whitechargefour = 0;
-
-void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
-    blacklivefour = 0;
-    whitelivefour = 0;
-    blackchargefour = 0;
-    whitechargefour = 0;
+void twocheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
+    blacklivetwo = 0;
+    whitelivetwo = 0;
+    blacksleeptwo = 0;
+    whitesleeptwo = 0;
     int target = BLACK;//检索目标
     if(target == BLACK){//黑棋检索
         //先纵向检索
@@ -35,28 +34,28 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
                 break;
             }
         }
-        if(colnum_down + colnum_up + 1 == 4){
+        if(colnum_down + colnum_up + 1 == 2){
             if(targetrow != 0 && targetrow != 14 && targetrow + colnum_down != 14 && targetrow - colnum_up != 0 && board[targetrow + colnum_down + 1][targetcol] == EMPTY && board[targetrow - colnum_up - 1][targetcol] == EMPTY){
-            blacklivefour ++;
+            blacklivetwo ++;
            }
            else{
             if(board[targetrow + colnum_down + 1][targetcol] == EMPTY && board[targetrow - colnum_up - 1][targetcol] == WHITE){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
             else if(board[targetrow + colnum_down + 1][targetcol] == WHITE && board[targetrow - colnum_up - 1][targetcol] == EMPTY){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
             else if(targetrow == 14 && board[targetrow - colnum_up - 1][targetcol] == EMPTY){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
             else if(targetrow == 0 && board[targetrow + colnum_down + 1][targetcol] == EMPTY){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
-            else if(targetrow + colnum_down == 14 && board[targetrow - colnum_up - 1][targetcol] == EMPTY){
-            blackchargefour ++;
+            else if(targetrow + colnum_down == 14 && board[targetrow - 1][targetcol] == EMPTY){
+            blacksleeptwo ++;
             }
-            else if(targetrow - colnum_up == 0 && board[targetrow + colnum_down + 1][targetcol] == EMPTY){
-            blackchargefour ++;
+            else if(targetrow - colnum_up == 0 && board[targetrow + 1][targetcol] == EMPTY){
+            blacksleeptwo ++;
             }
         }
     }
@@ -79,28 +78,28 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
                 break;
             }
         }
-        if(rownum_left + rownum_right + 1 == 4){
+        if(rownum_left + rownum_right + 1 == 2){
             if(targetcol != 0 && targetcol != 14 && targetcol + rownum_right != 14 && targetcol - rownum_left != 0 && board[targetrow][targetcol - rownum_left - 1] == EMPTY && board[targetrow][targetcol + rownum_right + 1] == EMPTY){
-            blacklivefour ++;
+            blacklivetwo ++;
            }
             else{
             if(board[targetrow][targetcol - rownum_left - 1] == WHITE && board[targetrow][targetcol + rownum_right + 1] == EMPTY){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
             else if(board[targetrow][targetcol - rownum_left - 1] == EMPTY && board[targetrow][targetcol + rownum_right + 1] == WHITE){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
             else if(targetcol == 14 && board[targetrow][targetcol - rownum_left - 1] == EMPTY){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
             else if(targetcol == 0 && board[targetrow][targetcol + rownum_right + 1] == EMPTY){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
-            else if(targetcol + rownum_right == 14 && board[targetrow][targetcol - rownum_left - 1] == EMPTY){
-            blackchargefour ++;
+            else if(targetcol + rownum_right == 14 && board[targetrow][targetcol - 1] == EMPTY){
+            blacksleeptwo ++;
             }
-            else if(targetcol - rownum_left == 0 && board[targetrow][targetcol + rownum_right + 1] == EMPTY){
-            blackchargefour ++;
+            else if(targetcol - rownum_left == 0 && board[targetrow][targetcol + 1] == EMPTY){
+            blacksleeptwo ++;
             }
         }
         }
@@ -123,28 +122,28 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
                 break;
             }
         }
-        if(rightup + leftdown + 1 == 4){
+        if(rightup + leftdown + 1 == 2){
             if(targetcol != 0 && targetcol != 14 && targetrow != 0 && targetrow != 14 && targetrow + leftdown != 14 && targetrow - rightup != 0 && targetcol - leftdown != 0 && targetcol + rightup != 14 && board[targetrow + leftdown + 1][targetcol - leftdown - 1] == EMPTY && board[targetrow - rightup - 1][targetcol + rightup + 1] == EMPTY){
-            blacklivefour ++;
+            blacklivetwo ++;
            }
            else{
             if(board[targetrow + leftdown + 1][targetcol - leftdown - 1] == EMPTY && board[targetrow - rightup - 1][targetcol + rightup + 1] == WHITE){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
           else if(board[targetrow + leftdown + 1][targetcol - leftdown - 1] == WHITE && board[targetrow - rightup - 1][targetcol + rightup + 1] == EMPTY){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
            else if((targetcol == 14 || targetrow == 0) && board[targetrow + leftdown + 1][targetcol - leftdown - 1] == EMPTY){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
             else if((targetcol == 0 || targetrow == 14) && board[targetrow - rightup - 1][targetcol + rightup + 1] == EMPTY){
-            blackchargefour ++;
+            blacksleeptwo ++;
         }
-        else if((targetrow + leftdown == 14 || targetcol - leftdown == 0) && board[targetrow - leftdown - 1][targetcol + rightup + 1] == EMPTY){
-            blackchargefour ++;
+        else if((targetrow + leftdown == 14 || targetcol - leftdown == 0) && board[targetrow - 1][targetcol + 1] == EMPTY){
+            blacksleeptwo ++;
             }
-            else if((targetrow - rightup == 0 || targetcol + rightup == 14) && board[targetrow + rightup + 1][targetcol - leftdown - 1] == EMPTY){
-            blackchargefour ++;
+            else if((targetrow - rightup == 0 || targetcol + rightup == 14) && board[targetrow + 1][targetcol - 1] == EMPTY){
+            blacksleeptwo ++;
             }
         }
         }
@@ -167,28 +166,28 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
                 break;
             }
         }
-        if(rightdown + leftup + 1 == 4){
+        if(rightdown + leftup + 1 == 2){
             if(targetcol != 0 && targetcol != 14 && targetrow != 0 && targetrow != 14 && targetrow + rightdown!= 14 && targetrow - leftup != 0 && targetcol + rightdown != 14 && targetcol - leftup != 0 && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY && board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY){
-            blacklivefour ++;
+            blacklivetwo ++;
            }
            else{
           if(board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY && board[targetrow - leftup - 1][targetcol - leftup - 1] == WHITE){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
            else if(board[targetrow + rightdown + 1][targetcol + rightdown + 1] == WHITE && board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
            else if((targetcol == 14 || targetrow == 14) && board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY){
-            blackchargefour ++;
+            blacksleeptwo ++;
            }
             else if((targetcol == 0 || targetrow == 0) && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY){
-            blackchargefour ++;
+            blacksleeptwo ++;
         }
-            else if((targetrow + rightdown == 14 || targetcol + rightdown == 14) && board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY){
-            blackchargefour ++;
+            else if((targetrow + rightdown == 14 || targetcol + rightdown == 14) && board[targetrow - 1][targetcol - 1] == EMPTY){
+            blacksleeptwo ++;
             }
-            else if((targetrow - leftup == 0 || targetcol - leftup == 0) && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY){
-            blackchargefour ++;
+            else if((targetrow - leftup == 0 || targetcol - leftup == 0) && board[targetrow + 1][targetcol + 1] == EMPTY){
+            blacksleeptwo ++;
             }
         }
         }
@@ -214,28 +213,28 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
                 break;
             }
         }
-        if(colnum_down + colnum_up + 1 == 4){
+        if(colnum_down + colnum_up + 1 == 2){
            if(targetrow != 0 && targetrow != 14 && targetrow + colnum_down != 14 && targetrow - colnum_up != 0 && board[targetrow + colnum_down + 1][targetcol] == EMPTY && board[targetrow - colnum_up - 1][targetcol] == EMPTY){
-            whitelivefour ++;
+            whitelivetwo ++;
            }
             else {
             if(board[targetrow + colnum_down + 1][targetcol] == EMPTY && board[targetrow - colnum_up - 1][targetcol] == BLACK){
-            whitechargefour ++;
+            whitesleeptwo ++;
            }
            else if(board[targetrow + colnum_down + 1][targetcol] == BLACK && board[targetrow - colnum_up - 1][targetcol] == EMPTY){
-            whitechargefour ++;
+            whitesleeptwo ++;
            }
            else if(targetrow == 14 && board[targetrow - colnum_up - 1][targetcol] == EMPTY){
-            whitechargefour ++;
+            whitesleeptwo ++;
            }
             else if(targetrow == 0 && board[targetrow + colnum_down + 1][targetcol] == EMPTY){
-            whitechargefour ++;
+            whitesleeptwo ++;
         }
-            else if(targetrow + colnum_down == 14 && board[targetrow - colnum_up - 1][targetcol] == EMPTY){
-            whitechargefour ++;
+            else if(targetrow + colnum_down == 14 && board[targetrow - 1][targetcol] == EMPTY){
+            whitesleeptwo ++;
             }
-            else if(targetrow - colnum_up == 0 && board[targetrow + colnum_down + 1][targetcol] == EMPTY){
-            whitechargefour ++;
+            else if(targetrow - colnum_up == 0 && board[targetrow + 1][targetcol] == EMPTY){
+            whitesleeptwo ++;
             }
     }
         }
@@ -258,28 +257,28 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
                 break;
             }
         }
-        if(rownum_left + rownum_right + 1 == 4){
+        if(rownum_left + rownum_right + 1 == 2){
             if(targetcol != 0 && targetcol != 14 && targetcol + rownum_right != 14 && targetcol - rownum_left != 0 && board[targetrow][targetcol - rownum_left - 1] == EMPTY && board[targetrow][targetcol + rownum_right + 1] == EMPTY){
-            whitelivefour ++;
+            whitelivetwo ++;
            }
            else{
              if(board[targetrow][targetcol - rownum_left - 1] == BLACK && board[targetrow][targetcol + rownum_right + 1] == EMPTY){
-            whitechargefour ++;
+            whitesleeptwo ++;
            }
             else if(board[targetrow][targetcol - rownum_left - 1] == EMPTY && board[targetrow][targetcol + rownum_right + 1] == BLACK){
-            whitechargefour ++;
+            whitesleeptwo ++;
            }
            else if(targetcol == 14 && board[targetrow][targetcol - rownum_left - 1] == EMPTY){
-            whitechargefour ++;
+            whitesleeptwo ++;
            }
            else if(targetcol == 0 && board[targetrow][targetcol + rownum_right + 1] == EMPTY){
-            whitechargefour ++;
+            whitesleeptwo ++;
             }
-            else if(targetcol + rownum_right == 14 && board[targetrow][targetcol - rownum_left - 1] == EMPTY){
-            whitechargefour ++;
+            else if(targetcol + rownum_right == 14 && board[targetrow][targetcol - 1] == EMPTY){
+            whitesleeptwo ++;
             }
-            else if(targetcol - rownum_left == 0 && board[targetrow][targetcol + rownum_right + 1] == EMPTY){
-            whitechargefour ++;
+            else if(targetcol - rownum_left == 0 && board[targetrow][targetcol + 1] == EMPTY){
+            whitesleeptwo ++;
             }
         }
         }
@@ -302,28 +301,28 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
                 break;
             }
         }
-        if(rightup + leftdown + 1 == 4){
+        if(rightup + leftdown + 1 == 2){
             if(targetcol != 0 && targetcol != 14 && targetrow != 0 && targetrow != 14 && targetrow + leftdown != 14 && targetrow - rightup != 0 && targetcol - leftdown != 0 && targetcol + rightup != 14 && board[targetrow + leftdown + 1][targetcol - leftdown - 1] == EMPTY && board[targetrow - rightup - 1][targetcol + rightup + 1] == EMPTY){
-            whitelivefour ++;
+            whitelivetwo ++;
            }
            else{
           if(board[targetrow + leftdown + 1][targetcol - leftdown - 1] == EMPTY && board[targetrow - rightup - 1][targetcol + rightup + 1] == BLACK){
-            whitechargefour ++;
+            whitesleeptwo ++;
            }
            else if(board[targetrow + leftdown + 1][targetcol - leftdown - 1] == BLACK && board[targetrow - rightup - 1][targetcol + rightup + 1] == EMPTY){
-            whitechargefour ++;
+            whitesleeptwo ++;
            }
            else if((targetcol == 14 || targetrow == 0) && board[targetrow + leftdown + 1][targetcol - leftdown - 1] == EMPTY){
-            whitechargefour ++;
+            whitesleeptwo ++;
            }
             else if((targetcol == 0 || targetrow == 14) && board[targetrow - rightup - 1][targetcol + rightup + 1] == EMPTY){
-            whitechargefour ++;
+            whitesleeptwo ++;
         }
-          else if((targetrow + leftdown == 14 || targetcol - leftdown == 0) && board[targetrow - leftdown - 1][targetcol + rightup + 1] == EMPTY){
-            whitechargefour ++;
+          else if((targetrow + leftdown == 14 || targetcol - leftdown == 0) && board[targetrow - 1][targetcol + 1] == EMPTY){
+            whitesleeptwo ++;
             }
-            else if((targetrow - rightup == 0 || targetcol + rightup == 14) && board[targetrow + rightup + 1][targetcol - leftdown - 1] == EMPTY){
-            whitechargefour ++;
+            else if((targetrow - rightup == 0 || targetcol + rightup == 14) && board[targetrow + 1][targetcol - 1] == EMPTY){
+            whitesleeptwo ++;
             }
         }
         }
@@ -346,28 +345,28 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
                 break;
             }
         }
-        if(rightdown + leftup + 1 == 4){
+        if(rightdown + leftup + 1 == 2){
             if(targetcol != 0 && targetcol != 14 && targetrow != 0 && targetrow != 14 && targetrow + rightdown!= 14 && targetrow - leftup != 0 && targetcol + rightdown != 14 && targetcol - leftup != 0 && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY && board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY){
-            whitelivefour ++;
+            whitelivetwo ++;
            }
            else {
             if(board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY && board[targetrow - leftup - 1][targetcol - leftup - 1] == BLACK){
-            whitechargefour ++;
+            whitesleeptwo ++;
            }
            else if(board[targetrow + rightdown + 1][targetcol + rightdown + 1] == BLACK && board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY){
-            whitechargefour ++;
+            whitesleeptwo ++;
            }
             else if((targetcol == 14 || targetrow == 14) && board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY){
-            whitechargefour ++;
+            whitesleeptwo ++;
            }
              else if((targetcol == 0 || targetrow == 0) && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY){
-            whitechargefour ++;
+            whitesleeptwo ++;
         }
-        else if((targetrow + rightdown == 14 || targetcol + rightdown == 14) && board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY){
-            whitechargefour ++;
+        else if((targetrow + rightdown == 14 || targetcol + rightdown == 14) && board[targetrow - 1][targetcol - 1] == EMPTY){
+            whitesleeptwo ++;
             }
-            else if((targetrow - leftup == 0 || targetcol - leftup == 0) && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY){
-            whitechargefour ++;
+            else if((targetrow - leftup == 0 || targetcol - leftup == 0) && board[targetrow + 1][targetcol + 1] == EMPTY){
+            whitesleeptwo ++;
             }
         }
         }

@@ -14,6 +14,7 @@ OBJS = Main/main.o \
 	   Shapecheck/fivecheck.o \
 	   Shapecheck/fivepluscheck.o \
 	   Shapecheck/fourcheck.o \
+	   Shapecheck/twocheck.o \
 	   Wincheck/wincheck.o
 
 $(TARGET): $(OBJS)

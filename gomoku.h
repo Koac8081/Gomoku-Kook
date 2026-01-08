@@ -40,6 +40,14 @@ extern int blacklivefour; //黑棋下在此处形成的活四数
 extern int whitelivefour; //白棋下在此处形成的活四数
 extern int blackchargefour; //黑棋下在此处形成的冲四数
 extern int whitechargefour; //白棋下在此处形成的冲四数
+extern int blacklivethree; //黑棋下在此处形成的活三数
+extern int whitelivethree; //白棋下在此处形成的活三数
+extern int blacksleepthree; //黑棋下在此处形成的眠三数
+extern int whitesleepthree; //白棋下在此处形成的眠三数
+extern int blacklivetwo; //黑棋下在此处形成的活二数
+extern int whitelivetwo; //白棋下在此处形成的活二数
+extern int blacksleeptwo; //黑棋下在此处形成的眠二数
+extern int whitesleeptwo; //白棋下在此处形成的眠二数
 
 extern int targetrow; //检索棋盘时的目标行坐标
 extern int targetcol; //检索棋盘时的目标纵坐标
@@ -52,7 +60,9 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
 
 void fivecheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol);  //检查下在此处的五连数
 void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //检查下在此处的长连数
-void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //检查下在此处的活四，冲四
+void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //检查下在此处的活四，冲四数
+void threecheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //检查下在此处的活三，眠三数
+void twocheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //检查下在此处的活二，眠二数
 
 /*
 15 ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
