@@ -23,7 +23,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
         }
         int colnum_down = 0;//向下连子数
         while(1){
-            if(targetrow + colnum_down + 1 <= 14 && board[targetrow + colnum_down + 1][targetcol] == BLACK){
+            if(targetrow + colnum_down + 1 <= BOARDMAX && board[targetrow + colnum_down + 1][targetcol] == BLACK){
             colnum_down ++;
             }
             else{
@@ -45,7 +45,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
         }
         int rownum_right = 0;//向右连子数
         while(1){
-            if(targetcol + rownum_right + 1 <= 14 && board[targetrow][targetcol + rownum_right + 1] == BLACK){
+            if(targetcol + rownum_right + 1 <= BOARDMAX && board[targetrow][targetcol + rownum_right + 1] == BLACK){
                 rownum_right ++;
             }
             else{
@@ -58,7 +58,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
         //再向45°-225°方向检索
         int rightup = 0;//右上连子数
         while(1){
-            if(targetrow - rightup - 1 >= 0 && targetcol + rightup + 1 <= 14 && board[targetrow - rightup - 1][targetcol + rightup + 1] == BLACK){
+            if(targetrow - rightup - 1 >= 0 && targetcol + rightup + 1 <= BOARDMAX && board[targetrow - rightup - 1][targetcol + rightup + 1] == BLACK){
                 rightup ++;
             }
             else{
@@ -67,7 +67,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
         }
         int leftdown = 0;//左下连子数
         while(1){
-            if(targetrow + leftdown + 1 <= 14 && targetcol - leftdown - 1 >= 0 && board[targetrow + leftdown + 1][targetcol - leftdown - 1] == BLACK){
+            if(targetrow + leftdown + 1 <= BOARDMAX && targetcol - leftdown - 1 >= 0 && board[targetrow + leftdown + 1][targetcol - leftdown - 1] == BLACK){
                 leftdown ++;
             }
             else{
@@ -80,7 +80,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
         //再向135°-315°方向检索
         int rightdown = 0;//右下连子数
         while(1){
-            if(targetrow + rightdown + 1 <= 14 && targetcol + rightdown + 1 <= 14 && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == BLACK){
+            if(targetrow + rightdown + 1 <= BOARDMAX && targetcol + rightdown + 1 <= BOARDMAX && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == BLACK){
                 rightdown ++;
             }
             else{
@@ -114,7 +114,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
         }
         int colnum_down = 0;//向下连子数
         while(1){
-            if(targetrow + colnum_down + 1 <= 14 && board[targetrow + colnum_down + 1][targetcol] == WHITE){
+            if(targetrow + colnum_down + 1 <= BOARDMAX && board[targetrow + colnum_down + 1][targetcol] == WHITE){
             colnum_down ++;
             }
             else{
@@ -136,7 +136,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
         }
         int rownum_right = 0;//向右连子数
         while(1){
-            if(targetcol + rownum_right + 1 <= 14 && board[targetrow][targetcol + rownum_right + 1] == WHITE){
+            if(targetcol + rownum_right + 1 <= BOARDMAX && board[targetrow][targetcol + rownum_right + 1] == WHITE){
                 rownum_right ++;
             }
             else{
@@ -149,7 +149,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
         //再向45°-225°方向检索
         int rightup = 0;//右上连子数
         while(1){
-            if(targetrow - rightup - 1 >= 0 && targetcol + rightup + 1 <= 14 && board[targetrow - rightup - 1][targetcol + rightup + 1] == WHITE){
+            if(targetrow - rightup - 1 >= 0 && targetcol + rightup + 1 <= BOARDMAX && board[targetrow - rightup - 1][targetcol + rightup + 1] == WHITE){
                 rightup ++;
             }
             else{
@@ -158,7 +158,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
         }
         int leftdown = 0;//左下连子数
         while(1){
-            if(targetrow + leftdown + 1 <= 14 && targetcol - leftdown - 1 >= 0 && board[targetrow + leftdown + 1][targetcol - leftdown - 1] == WHITE){
+            if(targetrow + leftdown + 1 <= BOARDMAX && targetcol - leftdown - 1 >= 0 && board[targetrow + leftdown + 1][targetcol - leftdown - 1] == WHITE){
                 leftdown ++;
             }
             else{
@@ -171,7 +171,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
         //再向135°-315°方向检索
         int rightdown = 0;//右下连子数
         while(1){
-            if(targetrow + rightdown + 1 <= 14 && targetcol + rightdown + 1 <= 14 && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == WHITE){
+            if(targetrow + rightdown + 1 <= BOARDMAX && targetcol + rightdown + 1 <= BOARDMAX && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == WHITE){
                 rightdown ++;
             }
             else{

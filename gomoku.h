@@ -6,6 +6,7 @@
 
 #define BOARDSIZE 15 //棋盘大小
 #define MAXSTEP 225 //最大步数
+#define BOARDMAX 14 //棋盘上边界
 
 #define PVP 1 //人人对战
 #define PVE 2 //人机对战
@@ -15,6 +16,7 @@
 #define WHITEWIN 1 //白赢
 #define BLACKWIN 2 //黑赢
 #define PEACE 3 //平局
+#define EXIT 4 //退出
 
 #define WHITEGO 1 //白棋做落子决策中
 #define BLACKGO 2 //黑棋做落子决策中
@@ -22,7 +24,16 @@
 #define PLAYERCHOSEBLACK 1 //PVE模式中，玩家选择黑棋
 #define PLAYERCHOSEWHITE 2 //PVE模式中，玩家选择白棋
 
+#define WINATTACK 20000000 //下在此处，即可胜利
+#define MUSTDEFEND 1000000 //敌人下在此处，就会失败
+#define MUSTATTACK 10000 //下在此处可基本确定胜利
+#define BANNED - 10000000 //此处是禁手
+
+#define NOTBAN 0 //不是黑棋禁手
+#define BAN 1 //是黑棋禁手
+
 extern int board[BOARDSIZE][BOARDSIZE]; //棋盘及状态
+
 extern int gamemode; //游戏模式
 extern int gamestate; //游戏状态
 extern int goinger; //正在做落子抉择的一方
@@ -31,6 +42,7 @@ extern char col; //玩家输入的落子纵坐标;棋盘上的col对应数组里
 extern int blackstep; //黑棋至今步数
 extern int whitestep; //白棋至今步数
 extern int playerchose; //PVE模式中玩家选择的一方
+extern int aimode; //PVE模式中AI的一方
 
 extern int blackfive; //黑棋下在此处形成的五连数
 extern int whitefive; //白棋下在此处形成的五连数
@@ -52,6 +64,10 @@ extern int whitesleeptwo; //白棋下在此处形成的眠二数
 extern int targetrow; //检索棋盘时的目标行坐标
 extern int targetcol; //检索棋盘时的目标纵坐标
 
+extern int score[BOARDSIZE][BOARDSIZE]; //棋盘上一点的分数
+
+extern int ban[BOARDSIZE][BOARDSIZE]; //棋盘上一点是否为黑方禁手
+
 void boardprint(int board[BOARDSIZE][BOARDSIZE],int row,char col); //棋盘打印及更新
 void boardreset(int board[BOARDSIZE][BOARDSIZE]); //重置棋盘
 void emptyboardprint(int board[BOARDSIZE][BOARDSIZE]); //打印空棋盘
@@ -63,6 +79,12 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol);
 void fourcheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //检查下在此处的活四，冲四数
 void threecheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //检查下在此处的活三，眠三数
 void twocheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //检查下在此处的活二，眠二数
+
+void scorereset(int score[BOARDSIZE][BOARDSIZE]); //重置棋盘分数
+void mark(int board[BOARDSIZE][BOARDSIZE],int ban[BOARDSIZE][BOARDSIZE],int aimode); //对棋盘上每点进行打分
+
+void banreset(int ban[BOARDSIZE][BOARDSIZE]); //重置禁手判断
+void bancheck(int ban[BOARDSIZE][BOARDSIZE],int board[BOARDSIZE][BOARDSIZE]); //判断棋盘上每点是否为禁手
 
 /*
 15 ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐

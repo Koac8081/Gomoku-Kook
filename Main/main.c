@@ -12,19 +12,27 @@ int whitestep;
 int playerchose;
 int targetrow;
 int targetcol;
+int score[BOARDSIZE][BOARDSIZE];
+int ban[BOARDSIZE][BOARDSIZE];
+int aimode;
 
 int main(){
     while(1){
         boardreset(board);//重置棋盘
+        banreset(ban);//重置黑棋禁手判断
+        scorereset(score);//重置打分
         gamestate = UNDERWAY;//将游戏状态置为进行中
         blackstep = 0;//重置黑棋步数
         whitestep = 0;//重置白棋步数
         printf("游戏开始\n");
-        printf("请选择模式：\n1.PVP\n2.PVE\n3.Debug模式\n输入“1”选择PVP模式,输入“2”选择PVE模式,输入“3”选择Debug模式\n");
+        printf("请选择模式：\n1.PVP\n2.PVE\n3.Debug模式\n输入“1”选择PVP模式,输入“2”选择PVE模式,输入“3”选择Debug模式\n输入“4”退出\n");
         while(1){//游戏模式选择
             if(scanf("%d",&gamemode) == 1){
                 if(gamemode == PVE || gamemode == PVP || gamemode == DEBUG){
                     break;
+                }
+                else if(gamemode == EXIT){
+                    return 0;
                 }
                 else{
                 printf("您输入了1、2或3以外的数字,请重新输入!\n");
@@ -62,6 +70,7 @@ int main(){
             printf("棋局开始\n");
             emptyboardprint(board);
             if(playerchose == PLAYERCHOSEBLACK){//玩家选择黑棋后的PVE游戏
+                aimode = WHITE;
             while(gamestate == UNDERWAY){
                     printf("请玩家落子-输入“行 列”,其中行为1-15的数字,列为A-O的大写字母\n");
                     printf("当前黑棋（玩家）已落%d子,白棋（电脑）已落%d子\n",blackstep,whitestep);
@@ -96,7 +105,8 @@ int main(){
         }
         
     }
-            else{//玩家选择白棋后的PVP游戏
+            else{//玩家选择白棋后的PVE游戏
+                aimode = BLACK;
                 while(gamestate == UNDERWAY){
                     printf("请玩家落子-输入“行 列”,其中行为1-15的数字,列为A-O的大写字母\n");
                     printf("当前黑棋（电脑）已落%d子,白棋（玩家）已落%d子\n",blackstep,whitestep);
@@ -162,6 +172,10 @@ int main(){
                 printf("黑方胜利！\n重新开始游戏\n");
                 break;
             }
+            else if(gamestate == WHITEWIN){
+                printf("黑方下出禁手，白方胜利！\n重新开始游戏\n");
+                break;
+            }
             else if(gamestate == PEACE){
                 printf("平局！\n重新开始游戏\n");
                 break;
@@ -200,6 +214,8 @@ int main(){
         }
         if(gamemode == DEBUG){//Debug模式，显示对棋型的判断
             printf("您选择了Debug模式\n");
+            printf("选择要查看的AI分数:输入“1”查看白方，输入“2”查看黑方\n");
+            scanf("%d",&aimode);
             printf("棋局开始\n");
             emptyboardprint(board);
             while(gamestate == UNDERWAY){
@@ -211,21 +227,35 @@ int main(){
             }
             targetrow = BOARDSIZE - row;
             targetcol = col - 'A';
+            bancheck(ban,board);
+            mark(board,ban,aimode);
+            if(ban[targetrow][targetcol] == BAN){
+                printf("此处是黑棋禁手\n");
+            }
+            else{
+                printf("此处不是黑棋禁手\n");
+            }
+            printf("此处的打分为:%d\n",score[targetrow][targetcol]);
             twocheck(board,targetrow,targetcol);
+            threecheck(board,targetrow,targetcol);
             fourcheck(board,targetrow,targetcol);
             fivecheck(board,targetrow,targetcol);
             fivepluscheck(board,targetrow,targetcol);
-            printf("黑棋活二:%d\n",blacklivetwo);
-            printf("白棋活二:%d\n",whitelivetwo);
-            printf("黑棋眠二:%d\n",blacksleeptwo);
+            printf("黑棋活二:%d  ",blacklivetwo);
+            printf("白棋活二:%d  ",whitelivetwo);
+            printf("黑棋眠二:%d  ",blacksleeptwo);
             printf("白棋眠二:%d\n",whitesleeptwo);
-            printf("黑棋活四:%d\n",blacklivefour);
-            printf("白棋活四:%d\n",whitelivefour);
-            printf("黑棋冲四:%d\n",blackchargefour);
+            printf("黑棋活三:%d  ",blacklivethree);
+            printf("白棋活三:%d  ",whitelivethree);
+            printf("黑棋眠三:%d  ",blacksleepthree);
+            printf("白棋眠三:%d\n",whitesleepthree);
+            printf("黑棋活四:%d  ",blacklivefour);
+            printf("白棋活四:%d  ",whitelivefour);
+            printf("黑棋冲四:%d  ",blackchargefour);
             printf("白棋冲四:%d\n",whitechargefour);
-            printf("黑棋连五:%d\n",blackfive);
-            printf("白棋连五:%d\n",whitefive);
-            printf("黑棋长连:%d\n",blackfiveplus);
+            printf("黑棋连五:%d  ",blackfive);
+            printf("白棋连五:%d  ",whitefive);
+            printf("黑棋长连:%d  ",blackfiveplus);
             printf("白棋长连:%d\n",whitefiveplus);
     }
         printf("请黑方落子-输入“行 列”,其中行为1-15的数字,列为A-O的大写字母\n");
