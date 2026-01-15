@@ -2,12 +2,13 @@
 #include<stdio.h>
 #include"../gomoku.h"
 
-int blackfive = 0;
-int whitefive = 0;
+int blackfive = 0; //黑棋连五
+int whitefive = 0; //白棋连五
 
-void fivecheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
+void fivecheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){//逻辑与wincheck几乎相同，不再重复注释
     blackfive = 0;
-    whitefive = 0;
+    whitefive = 0; //重置
+
     int target = BLACK;//检索目标
     if(target == BLACK){//黑棋检索
         //先纵向检索
@@ -99,7 +100,7 @@ void fivecheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
             blackfive++;
         }
     }
-    target = WHITE;
+    target = WHITE; 
     if(target == WHITE){//白棋检索
         //先纵向检索
         int colnum_up = 0;//向上连子数

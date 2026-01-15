@@ -3,17 +3,17 @@
 #include <stdio.h>
 #include "../gomoku.h"
 
-int blacklivefour = 0;
-int whitelivefour = 0;
+int blacklivefour = 0; //黑棋活四数
+int whitelivefour = 0; //白棋活四数
 
-int blackchargefour = 0;
-int whitechargefour = 0;
+int blackchargefour = 0; //黑棋冲四数
+int whitechargefour = 0; //白棋冲四数
 
 void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
     blacklivefour = 0;
     whitelivefour = 0;
     blackchargefour = 0;
-    whitechargefour = 0;
+    whitechargefour = 0; //重置
 
     // 黑棋检索
     // 纵向检索
@@ -44,14 +44,14 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
             blacklivefour++;
         }
         else {
-            // 冲四：一端被白棋堵
+            // 冲四，一端被白棋堵
             if (targetrow + colnum_down < BOARDMAX && targetrow - colnum_up > 0) {
                 if (board[targetrow + colnum_down + 1][targetcol] == EMPTY && board[targetrow - colnum_up - 1][targetcol] == WHITE)
                     blackchargefour++;
                 else if (board[targetrow + colnum_down + 1][targetcol] == WHITE && board[targetrow - colnum_up - 1][targetcol] == EMPTY)
                     blackchargefour++;
             }
-            // 冲四：一端是边界
+            // 冲四，一端是边界
             if (targetrow + colnum_down == BOARDMAX && targetrow - colnum_up > 0 && board[targetrow - colnum_up - 1][targetcol] == EMPTY) {
                 blackchargefour++;
             }
@@ -61,7 +61,7 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
         }
     }
     else {
-        // 跳四 
+        // 写完之后，发现还有跳四这种情况，即“黑黑空黑黑”或“黑空黑黑黑”，视作冲四 
         if (colnum_up + colnum_down + 1 == 1) {
             if (targetrow + 4 <= BOARDMAX && board[targetrow + 1][targetcol] == EMPTY && board[targetrow + 2][targetcol] == BLACK && board[targetrow + 3][targetcol] == BLACK && board[targetrow + 4][targetcol] == BLACK) {
                 blackchargefour++;
@@ -120,14 +120,14 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
             blacklivefour++;
         }
         else {
-            // 冲四：一端被白棋堵
+            // 冲四，一端被白棋堵
             if (targetcol - rownum_left > 0 && targetcol + rownum_right < BOARDMAX) {
                 if (board[targetrow][targetcol - rownum_left - 1] == WHITE && board[targetrow][targetcol + rownum_right + 1] == EMPTY)
                     blackchargefour++;
                 else if (board[targetrow][targetcol - rownum_left - 1] == EMPTY && board[targetrow][targetcol + rownum_right + 1] == WHITE)
                     blackchargefour++;
             }
-            // 冲四：一端是边界
+            // 冲四，一端是边界
             if (targetcol + rownum_right == BOARDMAX && targetcol - rownum_left > 0 && board[targetrow][targetcol - rownum_left - 1] == EMPTY) {
                 blackchargefour++;
             }
@@ -197,7 +197,7 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
             blacklivefour++;
         }
         else {
-            // 冲四：一端被堵
+            // 冲四，一端被堵
             if (targetrow + leftdown < BOARDMAX && targetcol - leftdown > 0 && targetrow - rightup > 0 && targetcol + rightup < BOARDMAX) {
                 if (board[targetrow + leftdown + 1][targetcol - leftdown - 1] == EMPTY && board[targetrow - rightup - 1][targetcol + rightup + 1] == WHITE) {
                     blackchargefour++;
@@ -206,7 +206,7 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
                     blackchargefour++;
                 }
             }
-            // 冲四：边界检查 
+            // 冲四，边界检查 
             if ((targetrow - rightup == 0 || targetcol + rightup == BOARDMAX) && targetrow + leftdown < BOARDMAX && targetcol - leftdown > 0) {
                 if (board[targetrow + leftdown + 1][targetcol - leftdown - 1] == EMPTY) {
                     blackchargefour++;
@@ -281,7 +281,7 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
             blacklivefour++;
         }
         else {
-            // 冲四：一端被堵
+            // 冲四，一端被堵
             if (targetrow + rightdown < BOARDMAX && targetcol + rightdown < BOARDMAX && targetrow - leftup > 0 && targetcol - leftup > 0) {
                 if (board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY && board[targetrow - leftup - 1][targetcol - leftup - 1] == WHITE) {
                     blackchargefour++;
@@ -290,7 +290,7 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
                     blackchargefour++;
                 }
             }
-            // 冲四：边界检查 
+            // 冲四，边界检查 
             if ((targetcol + rightdown == BOARDMAX || targetrow + rightdown == BOARDMAX) && targetrow - leftup > 0 && targetcol - leftup > 0) {
                 if (board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY) {
                     blackchargefour++;

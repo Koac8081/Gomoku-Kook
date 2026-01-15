@@ -3,12 +3,13 @@
 #include<stdio.h>
 #include"../gomoku.h"
 
-int blackfiveplus = 0;
-int whitefiveplus = 0;
+int blackfiveplus = 0; //黑棋长连
+int whitefiveplus = 0; //白棋长连
 
-void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
+void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){//逻辑与五连几乎相同，不再重复注释
     blackfiveplus = 0;
-    whitefiveplus = 0;
+    whitefiveplus = 0; //重置
+
     int target = BLACK;//检索目标
     if(target == BLACK){//黑棋检索
         //先纵向检索
@@ -100,7 +101,7 @@ void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){
             blackfiveplus++;
         }
     }
-    target = WHITE;
+    target = WHITE; //为了限制colnum_up等方向上连子数的作用域
     if(target == WHITE){//白棋检索
         //先纵向检索
         int colnum_up = 0;//向上连子数

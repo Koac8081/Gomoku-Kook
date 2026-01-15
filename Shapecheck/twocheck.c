@@ -2,16 +2,16 @@
 #include <stdio.h>
 #include "../gomoku.h"
 
-int blacklivetwo;
-int whitelivetwo;
-int blacksleeptwo;
-int whitesleeptwo;
+int blacklivetwo; //黑棋活二
+int whitelivetwo; //白棋活二
+int blacksleeptwo; //黑棋眠二
+int whitesleeptwo; //白棋眠二
 
-void twocheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
+void twocheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol){ //同样也遇到了缺少跳二判断的情况，即“黑空黑”这种情况；视为眠二
     blacklivetwo = 0;
     whitelivetwo = 0;
     blacksleeptwo = 0;
-    whitesleeptwo = 0;
+    whitesleeptwo = 0; //重置
 
     // 黑棋检索
     // 纵向检索
@@ -34,10 +34,8 @@ void twocheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
         }
     }
 
-    if (colnum_down + colnum_up + 1 == 2) {
-        if (targetrow - colnum_up > 0 && targetrow + colnum_down < BOARDMAX &&
-            board[targetrow - colnum_up - 1][targetcol] == EMPTY &&
-            board[targetrow + colnum_down + 1][targetcol] == EMPTY) {
+    if (colnum_down + colnum_up + 1 == 2) { //用枚举检查边界情况
+        if (targetrow - colnum_up > 0 && targetrow + colnum_down < BOARDMAX && board[targetrow - colnum_up - 1][targetcol] == EMPTY && board[targetrow + colnum_down + 1][targetcol] == EMPTY) {
             blacklivetwo++;
         }
         else {
@@ -49,7 +47,7 @@ void twocheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
             }
         }
     }
-    else if (colnum_down + colnum_up + 1 == 1) { // 跳二判断
+    else if (colnum_down + colnum_up + 1 == 1) { // 跳二判断；至少有一个方向没被堵住才有意义
         if (targetrow - 2 >= 0 && board[targetrow - 1][targetcol] == EMPTY && board[targetrow - 2][targetcol] == BLACK) {
             blacksleeptwo++;
         }
@@ -79,9 +77,7 @@ void twocheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
     }
 
     if (rownum_left + rownum_right + 1 == 2) {
-        if (targetcol - rownum_left > 0 && targetcol + rownum_right < BOARDMAX &&
-            board[targetrow][targetcol - rownum_left - 1] == EMPTY &&
-            board[targetrow][targetcol + rownum_right + 1] == EMPTY) {
+        if (targetcol - rownum_left > 0 && targetcol + rownum_right < BOARDMAX && board[targetrow][targetcol - rownum_left - 1] == EMPTY && board[targetrow][targetcol + rownum_right + 1] == EMPTY) {
             blacklivetwo++;
         }
         else {
@@ -123,10 +119,7 @@ void twocheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
     }
 
     if (rightup + leftdown + 1 == 2) {
-        if (targetrow - rightup > 0 && targetcol + rightup < BOARDMAX &&
-            targetrow + leftdown < BOARDMAX && targetcol - leftdown > 0 &&
-            board[targetrow - rightup - 1][targetcol + rightup + 1] == EMPTY &&
-            board[targetrow + leftdown + 1][targetcol - leftdown - 1] == EMPTY) {
+        if (targetrow - rightup > 0 && targetcol + rightup < BOARDMAX &&  targetrow + leftdown < BOARDMAX && targetcol - leftdown > 0 && board[targetrow - rightup - 1][targetcol + rightup + 1] == EMPTY && board[targetrow + leftdown + 1][targetcol - leftdown - 1] == EMPTY) {
             blacklivetwo++;
         }
         else {
@@ -168,10 +161,7 @@ void twocheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
     }
 
     if (rightdown + leftup + 1 == 2) {
-        if (targetrow + rightdown < BOARDMAX && targetcol + rightdown < BOARDMAX &&
-            targetrow - leftup > 0 && targetcol - leftup > 0 &&
-            board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY &&
-            board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY) {
+        if (targetrow + rightdown < BOARDMAX && targetcol + rightdown < BOARDMAX && targetrow - leftup > 0 && targetcol - leftup > 0 && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY && board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY) {
             blacklivetwo++;
         }
         else {
@@ -214,9 +204,7 @@ void twocheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
     }
 
     if (colnum_down + colnum_up + 1 == 2) {
-        if (targetrow - colnum_up > 0 && targetrow + colnum_down < BOARDMAX &&
-            board[targetrow - colnum_up - 1][targetcol] == EMPTY &&
-            board[targetrow + colnum_down + 1][targetcol] == EMPTY) {
+        if (targetrow - colnum_up > 0 && targetrow + colnum_down < BOARDMAX && board[targetrow - colnum_up - 1][targetcol] == EMPTY && board[targetrow + colnum_down + 1][targetcol] == EMPTY) {
             whitelivetwo++;
         }
         else {
@@ -258,9 +246,7 @@ void twocheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
     }
 
     if (rownum_left + rownum_right + 1 == 2) {
-        if (targetcol - rownum_left > 0 && targetcol + rownum_right < BOARDMAX &&
-            board[targetrow][targetcol - rownum_left - 1] == EMPTY &&
-            board[targetrow][targetcol + rownum_right + 1] == EMPTY) {
+        if (targetcol - rownum_left > 0 && targetcol + rownum_right < BOARDMAX && board[targetrow][targetcol - rownum_left - 1] == EMPTY && board[targetrow][targetcol + rownum_right + 1] == EMPTY) {
             whitelivetwo++;
         }
         else {
@@ -302,10 +288,7 @@ void twocheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
     }
 
     if (rightup + leftdown + 1 == 2) {
-        if (targetrow - rightup > 0 && targetcol + rightup < BOARDMAX &&
-            targetrow + leftdown < BOARDMAX && targetcol - leftdown > 0 &&
-            board[targetrow - rightup - 1][targetcol + rightup + 1] == EMPTY &&
-            board[targetrow + leftdown + 1][targetcol - leftdown - 1] == EMPTY) {
+        if (targetrow - rightup > 0 && targetcol + rightup < BOARDMAX && targetrow + leftdown < BOARDMAX && targetcol - leftdown > 0 && board[targetrow - rightup - 1][targetcol + rightup + 1] == EMPTY && board[targetrow + leftdown + 1][targetcol - leftdown - 1] == EMPTY) {
             whitelivetwo++;
         }
         else {
@@ -347,10 +330,7 @@ void twocheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
     }
 
     if (rightdown + leftup + 1 == 2) {
-        if (targetrow + rightdown < BOARDMAX && targetcol + rightdown < BOARDMAX &&
-            targetrow - leftup > 0 && targetcol - leftup > 0 &&
-            board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY &&
-            board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY) {
+        if (targetrow + rightdown < BOARDMAX && targetcol + rightdown < BOARDMAX && targetrow - leftup > 0 && targetcol - leftup > 0 && board[targetrow + rightdown + 1][targetcol + rightdown + 1] == EMPTY && board[targetrow - leftup - 1][targetcol - leftup - 1] == EMPTY) {
             whitelivetwo++;
         }
         else {

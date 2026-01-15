@@ -1,15 +1,14 @@
-//检查是否有一方胜利或平局
+//为决策树使用的wincheck
+
 #include<stdio.h>
 #include"../gomoku.h"
 
-void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int blackstep,int whitestep){
-    int realrow = BOARDSIZE - row;
-    int realcol = col - 'A';
-    if(goinger == BLACKGO && blackstep + whitestep < 225){//黑棋下完一步后，检索是否胜利；只检查goinger一方，避免重复
+int wincheckforai(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,int col){
+    if(goinger == BLACKGO){//黑棋下完一步后，检索是否胜利；只检查goinger一方，避免重复
         //先纵向检索
         int colnum_up = 0;//向上连子数
         while(1){
-            if(realrow - colnum_up - 1 >= 0 && board[realrow - colnum_up - 1][realcol] == BLACK){
+            if(row - colnum_up - 1 >= 0 && board[row - colnum_up - 1][col] == BLACK){
             colnum_up ++;
             }
             else{//五连或长连必然是同色紧贴，检测到不是黑色中断即可
@@ -18,7 +17,7 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
         }
         int colnum_down = 0;//向下连子数
         while(1){
-            if(realrow + colnum_down + 1 <= 14 && board[realrow + colnum_down + 1][realcol] == BLACK){
+            if(row + colnum_down + 1 <= 14 && board[row + colnum_down + 1][col] == BLACK){
             colnum_down ++;
             }
             else{
@@ -26,12 +25,12 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
             }
         }
         if(colnum_down + colnum_up + 1 == 5){
-            gamestate = BLACKWIN;//黑棋长连为禁手
+            return BLACKWIN;//黑棋长连为禁手
         }
         //再横向检索
         int rownum_left = 0;//向左连子数
         while(1){
-            if(realcol - rownum_left - 1 >= 0 && board[realrow][realcol - rownum_left - 1] == BLACK){
+            if(col - rownum_left - 1 >= 0 && board[row][col - rownum_left - 1] == BLACK){
             rownum_left ++;
             }
             else{
@@ -40,7 +39,7 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
         }
         int rownum_right = 0;//向右连子数
         while(1){
-            if(realcol + rownum_right + 1 <= 14 && board[realrow][realcol + rownum_right + 1] == BLACK){
+            if(col + rownum_right + 1 <= 14 && board[row][col + rownum_right + 1] == BLACK){
                 rownum_right ++;
             }
             else{
@@ -48,12 +47,12 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
             }
         }
         if(rownum_left + rownum_right + 1 == 5){
-            gamestate = BLACKWIN;
+            return BLACKWIN;
         }
         //再向45°-225°方向检索
         int rightup = 0;//右上连子数
         while(1){
-            if(realrow - rightup - 1 >= 0 && realcol + rightup + 1 <= 14 && board[realrow - rightup - 1][realcol + rightup + 1] == BLACK){
+            if(row - rightup - 1 >= 0 && col + rightup + 1 <= 14 && board[row - rightup - 1][col + rightup + 1] == BLACK){
                 rightup ++;
             }
             else{
@@ -62,7 +61,7 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
         }
         int leftdown = 0;//左下连子数
         while(1){
-            if(realrow + leftdown + 1 <= 14 && realcol - leftdown - 1 >= 0 && board[realrow + leftdown + 1][realcol - leftdown - 1] == BLACK){
+            if(row + leftdown + 1 <= 14 && col - leftdown - 1 >= 0 && board[row + leftdown + 1][col - leftdown - 1] == BLACK){
                 leftdown ++;
             }
             else{
@@ -70,12 +69,12 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
             }
         }
         if(rightup + leftdown + 1 == 5){
-            gamestate = BLACKWIN;
+            return BLACKWIN;
         }
         //再向135°-315°方向检索
         int rightdown = 0;//右下连子数
         while(1){
-            if(realrow + rightdown + 1 <= 14 && realcol + rightdown + 1 <= 14 && board[realrow + rightdown + 1][realcol + rightdown + 1] == BLACK){
+            if(row + rightdown + 1 <= 14 && col + rightdown + 1 <= 14 && board[row + rightdown + 1][col + rightdown + 1] == BLACK){
                 rightdown ++;
             }
             else{
@@ -84,7 +83,7 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
         }
         int leftup = 0;
         while(1){
-            if(realrow - leftup - 1 >= 0 && realcol - leftup - 1 >= 0 && board[realrow - leftup - 1][realcol - leftup - 1] == BLACK){
+            if(row - leftup - 1 >= 0 && col - leftup - 1 >= 0 && board[row - leftup - 1][col - leftup - 1] == BLACK){
                 leftup ++;
             }
             else{
@@ -92,14 +91,14 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
             }
         }
         if(rightdown + leftup + 1 == 5){
-            gamestate = BLACKWIN;
+            return BLACKWIN;
         }
     }
-    else if(goinger == WHITEGO && blackstep + whitestep < 225){//白棋下完一步后，检索是否胜利
+    else if(goinger == WHITEGO){//白棋下完一步后，检索是否胜利
         //先纵向检索
         int colnum_up = 0;//向上连子数
         while(1){
-            if(realrow - colnum_up - 1 >= 0 && board[realrow - colnum_up - 1][realcol] == WHITE){
+            if(row - colnum_up - 1 >= 0 && board[row - colnum_up - 1][col] == WHITE){
             colnum_up ++;
             }
             else{
@@ -108,7 +107,7 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
         }
         int colnum_down = 0;//向下连子数
         while(1){
-            if(realrow + colnum_down + 1 <= 14 && board[realrow + colnum_down + 1][realcol] == WHITE){
+            if(row + colnum_down + 1 <= 14 && board[row + colnum_down + 1][col] == WHITE){
             colnum_down ++;
             }
             else{
@@ -116,12 +115,12 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
             }
         }
         if(colnum_down + colnum_up + 1 >= 5){
-            gamestate = WHITEWIN;
+            return WHITEWIN;
         }
         //再横向检索
         int rownum_left = 0;//向左连子数
         while(1){
-            if(realcol - rownum_left - 1 >= 0 && board[realrow][realcol - rownum_left - 1] == WHITE){
+            if(col - rownum_left - 1 >= 0 && board[row][col - rownum_left - 1] == WHITE){
             rownum_left ++;
             }
             else{
@@ -130,7 +129,7 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
         }
         int rownum_right = 0;//向右连子数
         while(1){
-            if(realcol + rownum_right + 1 <= 14 && board[realrow][realcol + rownum_right + 1] == WHITE){
+            if(col + rownum_right + 1 <= 14 && board[row][col + rownum_right + 1] == WHITE){
                 rownum_right ++;
             }
             else{
@@ -138,12 +137,12 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
             }
         }
         if(rownum_left + rownum_right + 1 >= 5){
-            gamestate = WHITEWIN;
+            return WHITEWIN;
         }
         //再向45°-225°方向检索
         int rightup = 0;//右上连子数
         while(1){
-            if(realrow - rightup - 1 >= 0 && realcol + rightup + 1 <= 14 && board[realrow - rightup - 1][realcol + rightup + 1] == WHITE){
+            if(row - rightup - 1 >= 0 && col + rightup + 1 <= 14 && board[row - rightup - 1][col + rightup + 1] == WHITE){
                 rightup ++;
             }
             else{
@@ -152,7 +151,7 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
         }
         int leftdown = 0;//左下连子数
         while(1){
-            if(realrow + leftdown + 1 <= 14 && realcol - leftdown - 1 >= 0 && board[realrow + leftdown + 1][realcol - leftdown - 1] == WHITE){
+            if(row + leftdown + 1 <= 14 && col - leftdown - 1 >= 0 && board[row + leftdown + 1][col - leftdown - 1] == WHITE){
                 leftdown ++;
             }
             else{
@@ -160,12 +159,12 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
             }
         }
         if(rightup + leftdown + 1 >= 5){
-            gamestate = WHITEWIN;
+            return WHITEWIN;
         }
         //再向135°-315°方向检索
         int rightdown = 0;//右下连子数
         while(1){
-            if(realrow + rightdown + 1 <= 14 && realcol + rightdown + 1 <= 14 && board[realrow + rightdown + 1][realcol + rightdown + 1] == WHITE){
+            if(row + rightdown + 1 <= 14 && col + rightdown + 1 <= 14 && board[row + rightdown + 1][col + rightdown + 1] == WHITE){
                 rightdown ++;
             }
             else{
@@ -174,7 +173,7 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
         }
         int leftup = 0;
         while(1){
-            if(realrow - leftup - 1 >= 0 && realcol - leftup - 1 >= 0 && board[realrow - leftup - 1][realcol - leftup - 1] == WHITE){
+            if(row - leftup - 1 >= 0 && col - leftup - 1 >= 0 && board[row - leftup - 1][col - leftup - 1] == WHITE){
                 leftup ++;
             }
             else{
@@ -182,10 +181,8 @@ void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int b
             }
         }
         if(rightdown + leftup + 1 >= 5){
-            gamestate = WHITEWIN;
+            return WHITEWIN;
         }
     }
-    else if(blackstep + whitestep == MAXSTEP){
-        gamestate = PEACE;//棋盘下满，判平局
-    }
+    return UNDERWAY;
 }
