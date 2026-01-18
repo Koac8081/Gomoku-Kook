@@ -15,17 +15,17 @@ void mark(int board[BOARDSIZE][BOARDSIZE],int ban[BOARDSIZE][BOARDSIZE],int aimo
                     fourcheck(board,i,j);
                     fivecheck(board,i,j);
                     fivepluscheck(board,i,j); //先查出棋型
-                    blackscore[i][j] = SLEEPTWO*(blacksleeptwo + DEFENDFACTOR*whitesleeptwo) + LIVETWO*(blacklivetwo + DEFENDFACTOR*whitelivetwo) + SLEEPTHREE*(blacksleepthree + DEFENDFACTOR*whitesleepthree) + JUMPTHREE*(blackjumpthree + DEFENDFACTOR*whitejumpthree) + LIVETHREE*(blacklivethree + DEFENDFACTOR*whitelivethree) + CHARGEFOUR*(blackchargefour + DEFENDFACTOR*whitechargefour);
+                    blackscore[i][j] = SLEEPTWO*(blacksleeptwo + DEFENDFACTOR*whitesleeptwo) + LIVETWO*(blacklivetwo + DEFENDFACTOR*whitelivetwo) + SLEEPTHREE*(blacksleepthree + DEFENDFACTOR*whitesleepthree) + JUMPTHREE*(blackjumpthree + DEFENDFACTOR*whitejumpthree) + LIVETHREE*(blacklivethree + DEFENDFACTOR*whitelivethree) + CHARGEFOUR*(blackchargefour + DEFENDFACTOR*whitechargefour) + JUMPFOUR*(blackjumpfour + DEFENDFACTOR*whitejumpfour);
                     if(blacklivefour >= 1){
                         blackscore[i][j] = blackscore[i][j] + MUSTATTACK;
                     }//活四
                     if((blacklivethree + blackjumpthree) >= 2){
                         blackscore[i][j] = blackscore[i][j] + MUSTATTACK;
                     }//双活三
-                    if(blackchargefour >= 2){
+                    if(blackchargefour + blackjumpfour >= 2){
                         blackscore[i][j] = blackscore[i][j] + MUSTATTACK;
                     }//双冲四
-                    if(blacklivethree + blackjumpthree >= 1 && blackchargefour >= 1){
+                    if(blacklivethree + blackjumpthree >= 1 && blackchargefour + blackjumpfour >= 1){
                         blackscore[i][j] = blackscore[i][j] + MUSTATTACK;
                     }//活三+冲四
                     if(blacklivethree + blackjumpthree >= 1 && blacklivefour >= 1){
@@ -37,10 +37,10 @@ void mark(int board[BOARDSIZE][BOARDSIZE],int ban[BOARDSIZE][BOARDSIZE],int aimo
                     if(whitelivethree + whitejumpthree >= 2){
                         blackscore[i][j] = blackscore[i][j] + MUSTDEFEND;
                     }
-                    if(whitechargefour >= 2){
+                    if(whitechargefour + whitejumpfour >= 2){
                         blackscore[i][j] = blackscore[i][j] + MUSTDEFEND;
                     }
-                    if(whitelivethree + whitejumpthree >= 1 && whitechargefour >= 1){
+                    if(whitelivethree + whitejumpthree >= 1 && whitechargefour + whitejumpfour >= 1){
                         blackscore[i][j] = blackscore[i][j] + MUSTDEFEND;
                     }
                     if(whitelivethree + whitejumpthree >= 1 && whitelivefour >= 1){
@@ -58,17 +58,17 @@ void mark(int board[BOARDSIZE][BOARDSIZE],int ban[BOARDSIZE][BOARDSIZE],int aimo
                     if(blackfive >= 1){
                         blackscore[i][j] = blackscore[i][j] + WINATTACK; 
                     }//必胜处
-                    whitescore[i][j] = SLEEPTWO*(DEFENDFACTOR*blacksleeptwo + whitesleeptwo) + LIVETWO*(DEFENDFACTOR*blacklivetwo + whitelivetwo) + SLEEPTHREE*(DEFENDFACTOR*blacksleepthree + whitesleepthree) + JUMPTHREE*(DEFENDFACTOR*blackjumpthree + whitejumpthree) + LIVETHREE*(DEFENDFACTOR*blacklivethree + whitelivethree) + CHARGEFOUR*(DEFENDFACTOR*blackchargefour + whitechargefour);
+                    whitescore[i][j] = SLEEPTWO*(DEFENDFACTOR*blacksleeptwo + whitesleeptwo) + LIVETWO*(DEFENDFACTOR*blacklivetwo + whitelivetwo) + SLEEPTHREE*(DEFENDFACTOR*blacksleepthree + whitesleepthree) + JUMPTHREE*(DEFENDFACTOR*blackjumpthree + whitejumpthree) + LIVETHREE*(DEFENDFACTOR*blacklivethree + whitelivethree) + CHARGEFOUR*(DEFENDFACTOR*blackchargefour + whitechargefour) + JUMPFOUR*(DEFENDFACTOR*blackjumpfour + whitejumpfour);
                     if(whitelivefour >= 1){
                         whitescore[i][j] = whitescore[i][j] + MUSTATTACK;
                     }
                     if(whitelivethree + whitejumpthree >= 2){
                         whitescore[i][j] = whitescore[i][j] + MUSTATTACK;
                     }
-                    if(whitechargefour >= 2){
+                    if(whitechargefour + whitejumpfour >= 2){
                         whitescore[i][j] = whitescore[i][j] + MUSTATTACK;
                     }
-                    if(whitelivethree + whitejumpthree >= 1 && whitechargefour >= 1){
+                    if(whitelivethree + whitejumpthree >= 1 && whitechargefour + whitejumpfour >= 1){
                         whitescore[i][j] = whitescore[i][j] + MUSTATTACK;
                     }
                     if(whitelivethree + whitejumpthree >= 1 && whitelivefour >= 1){
@@ -81,10 +81,10 @@ void mark(int board[BOARDSIZE][BOARDSIZE],int ban[BOARDSIZE][BOARDSIZE],int aimo
                     if(blacklivethree + blackjumpthree >= 2){
                         whitescore[i][j] = whitescore[i][j] + MUSTDEFEND;
                     }
-                    if(blackchargefour >= 2){
+                    if(blackchargefour + blackjumpfour>= 2){
                         whitescore[i][j] = whitescore[i][j] + MUSTDEFEND;
                     }
-                    if(blacklivethree + blackjumpthree >= 1 && blackchargefour >= 1){
+                    if(blacklivethree + blackjumpthree >= 1 && blackchargefour + blackjumpfour>= 1){
                         whitescore[i][j] = whitescore[i][j] + MUSTDEFEND;
                     }
                     if(blacklivethree + blackjumpthree >= 1 && blacklivefour >= 1){
@@ -101,16 +101,14 @@ void mark(int board[BOARDSIZE][BOARDSIZE],int ban[BOARDSIZE][BOARDSIZE],int aimo
                         whitescore[i][j] = whitescore[i][j] + WINATTACK;
                     }//白棋长连也可
                     if (board[i][j] == EMPTY) {
-    int neighbor_count = 0;
-    // 检查周围 8 个格子
+    //发现棋局ai不太喜欢贴近防守活三，而是跳一格去防守跳三，加入贴近加分
+    int neighbor_count = 0; // 检查周围 8 个格子
     for (int di = -1; di <= 1; di++) {
         for (int dj = -1; dj <= 1; dj++) {
-            if (di == 0 && dj == 0) continue; // 跳过中心点
-            
+            if (di == 0 && dj == 0) continue; //跳过中心点
             int ni = i + di;
             int nj = j + dj;
-            
-            // 确保坐标不越界
+            //确保坐标不越界
             if (ni >= 0 && ni < BOARDSIZE && nj >= 0 && nj < BOARDSIZE) {
                 if (board[ni][nj] != EMPTY) {
                     neighbor_count++;
@@ -118,14 +116,11 @@ void mark(int board[BOARDSIZE][BOARDSIZE],int ban[BOARDSIZE][BOARDSIZE],int aimo
             }
         }
     }
-
-    // 给“贴身”的点增加权重（局面修正分）
-    // neighbor_count 越大，说明这个空位越处于“交火区”
+    // 给贴身的点增加权重
     if (neighbor_count > 0) {
-        // 这里的 500 可以根据你的 LIVETWO (300) 等级来调整
-        // 确保它能微调决策，但不会干扰到 MUSTATTACK 等大分
-        blackscore[i][j] += neighbor_count * 300; 
-        whitescore[i][j] += neighbor_count * 300;
+        // 确保它能微调决策，但不会干扰到大分
+        blackscore[i][j] += neighbor_count * NEIGHBORSCORE; 
+        whitescore[i][j] += neighbor_count * NEIGHBORSCORE;
     }
 }
                 }

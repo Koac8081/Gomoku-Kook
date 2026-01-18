@@ -124,7 +124,7 @@ int main(){
                     row = 9;
                     col = 'G';
                     board[6][6] = WHITE; 
-                }
+                } //限制第一手
             else{
                     Move aiaction = aimove();
                     row = BOARDSIZE - aiaction.x;
@@ -141,7 +141,7 @@ int main(){
                 printf("平局！\n重新开始游戏\n");
                 break;
             }
-            bancheck(tempban,board);//由于我的棋型检查只能检查棋盘空位，导致相关的函数也都只能检查棋盘空位；这里在白棋下完一手后检查哪里是禁手，再在黑棋下完一手后对比
+            bancheck(tempban,board);//由于棋型检查只能检查棋盘空位，导致相关的函数也都只能检查棋盘空位；这里在白棋下完一手后检查哪里是禁手，再在黑棋下完一手后对比
         }
     }
             else{//玩家选择白棋后的PVE游戏
@@ -152,7 +152,7 @@ int main(){
                     row = 8;
                     col = 'H';
                     board[7][7] = BLACK; 
-                }
+                } //第一手落正中心
                 else if(blackstep == 1){
                     if(board[6][6] == EMPTY){
                         row = 9;
@@ -164,7 +164,7 @@ int main(){
                         col = 'I';
                         board[8][8] = BLACK;
                     }
-                }
+                } //第二手
                 else{
                     Move aiaction = aimove();
                     row = BOARDSIZE - aiaction.x;
@@ -334,7 +334,9 @@ int main(){
             printf("黑棋活四:%d  ",blacklivefour);
             printf("白棋活四:%d  ",whitelivefour);
             printf("黑棋冲四:%d  ",blackchargefour);
-            printf("白棋冲四:%d\n",whitechargefour);
+            printf("白棋冲四:%d  ",whitechargefour);
+            printf("黑棋跳冲四:%d  ",blackjumpfour);
+            printf("白棋跳冲四:%d\n",whitejumpfour);
             printf("黑棋连五:%d  ",blackfive);
             printf("白棋连五:%d  ",whitefive);
             printf("黑棋长连:%d  ",blackfiveplus);

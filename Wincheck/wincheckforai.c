@@ -3,7 +3,7 @@
 #include<stdio.h>
 #include"../gomoku.h"
 
-int wincheckforai(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,int col){
+int wincheckforai(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,int col){//此函数目前没有参与实际程序
     if(goinger == BLACKGO){//黑棋下完一步后，检索是否胜利；只检查goinger一方，避免重复
         //先纵向检索
         int colnum_up = 0;//向上连子数

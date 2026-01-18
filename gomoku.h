@@ -25,17 +25,19 @@
 #define PLAYERCHOSEWHITE 2 //PVE模式中，玩家选择白棋
 
 #define WINATTACK 600000000 //下在此处，即可胜利
-#define MUSTDEFEND 20000000 //敌人下在此处，就会失败
-#define MUSTDEFENDNOW 200000000 //必须立刻防守
-#define MUSTATTACK 500000 //下在此处可基本确定胜利
-#define BANNED - 900000000 //此处是禁手
-#define SLEEPTWO 10 //打分时眠二的分数
+#define MUSTDEFEND 1000000 //敌人下在此处，就会失败
+#define MUSTDEFENDNOW 50000000 //必须立刻防守
+#define MUSTATTACK 200000 //下在此处可基本确定胜利
+#define BANNED -400000000 //此处是禁手
+#define SLEEPTWO 20 //打分时眠二的分数
 #define LIVETWO 300 //打分时活二的分数
 #define SLEEPTHREE 200 //打分时眠三的分数
-#define JUMPTHREE 30000 //打分时跳活三的分数
-#define LIVETHREE 50000 //打分时活三的分数
-#define CHARGEFOUR 150000 //打分时冲四的分数
+#define JUMPTHREE 4000 //打分时跳活三的分数
+#define LIVETHREE 5000 //打分时活三的分数
+#define JUMPFOUR 10000 //打分时跳四的分数
+#define CHARGEFOUR 15000 //打分时冲四的分数
 #define DEFENDFACTOR 1 //防御分的权重
+#define NEIGHBORSCORE 20 //紧贴棋子的加分
 
 #define NOTBAN 0 //不是黑棋禁手
 #define BAN 1 //是黑棋禁手
@@ -43,7 +45,7 @@
 #define BESTNUM 5 //为决策寻找的得分最高的棋子的数量
 #define LEVEL 8 //决策树深度，看接下来的几手
 #define BASE 2147483647 //决策基础分
-#define SCOREBASE -100000000 //搜索最高分时的基础分
+#define SCOREBASE -1000000000 //搜索最高分时的基础分
 
 typedef struct {// 寻找高分点
     int row;    // 行坐标
@@ -74,6 +76,8 @@ extern int blackfiveplus; //黑棋下在此处形成的长连数
 extern int whitefiveplus; //白棋下在此处形成的长连数
 extern int blacklivefour; //黑棋下在此处形成的活四数
 extern int whitelivefour; //白棋下在此处形成的活四数
+extern int blackjumpfour; //黑棋下在此处形成的跳四数
+extern int whitejumpfour; //白棋下在此处形成的跳四数
 extern int blackchargefour; //黑棋下在此处形成的冲四数
 extern int whitechargefour; //白棋下在此处形成的冲四数
 extern int blacklivethree; //黑棋下在此处形成的活三数
@@ -101,6 +105,7 @@ void boardreset(int board[BOARDSIZE][BOARDSIZE]); //重置棋盘
 void emptyboardprint(int board[BOARDSIZE][BOARDSIZE]); //打印空棋盘
 
 void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int blackstep,int whitestep); //检查是否有一方胜利或平局
+int wincheckforai(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,int col); //供ai决策使用的wincheck
 
 void fivecheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol);  //检查下在此处的五连数
 void fivepluscheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //检查下在此处的长连数
@@ -117,7 +122,6 @@ void bancheck(int ban[BOARDSIZE][BOARDSIZE],int board[BOARDSIZE][BOARDSIZE]); //
 Move aimove(); //AI决策
 int decisiontree(int depth, int decider, int currenttotal); //决策树
 int findtopscore(int decider, int blackscore[BOARDSIZE][BOARDSIZE], int whitescore[BOARDSIZE][BOARDSIZE], BestPoint candidates[BESTNUM]); //找到若干个得分最高的点，供决策树选择
-int wincheckforai(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,int col); //供决策使用的wincheck
 
 /*
 15 ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
@@ -136,7 +140,7 @@ int wincheckforai(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,int col); 
  2 ├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤
  1 └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
    A B C D E F G H I J K L M N O
-     这是终端中的棋盘，如果直接处理数组，那么应该是
+这是终端中的棋盘，如果直接处理数组，那么应该是
 0  ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
 1  ├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤
 2  ├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤

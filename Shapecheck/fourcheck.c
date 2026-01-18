@@ -9,9 +9,14 @@ int whitelivefour = 0; //白棋活四数
 int blackchargefour = 0; //黑棋冲四数
 int whitechargefour = 0; //白棋冲四数
 
+int blackjumpfour = 0; //黑棋跳四数
+int whitejumpfour = 0; //白棋跳四数
+
 void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
     blacklivefour = 0;
     whitelivefour = 0;
+    blackjumpfour = 0;
+    whitejumpfour = 0;
     blackchargefour = 0;
     whitechargefour = 0; //重置
 
@@ -64,30 +69,30 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
         // 写完之后，发现还有跳四这种情况，即“黑黑空黑黑”或“黑空黑黑黑”，视作冲四 
         if (colnum_up + colnum_down + 1 == 1) {
             if (targetrow + 4 <= BOARDMAX && board[targetrow + 1][targetcol] == EMPTY && board[targetrow + 2][targetcol] == BLACK && board[targetrow + 3][targetcol] == BLACK && board[targetrow + 4][targetcol] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
             if (targetrow - 4 >= 0 && board[targetrow - 1][targetcol] == EMPTY && board[targetrow - 2][targetcol] == BLACK && board[targetrow - 3][targetcol] == BLACK && board[targetrow - 4][targetcol] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
         }
         else if (colnum_up + colnum_down + 1 == 2) {
             int top = targetrow - colnum_up;
             int bottom = targetrow + colnum_down;
             if (bottom + 3 <= BOARDMAX && board[bottom + 1][targetcol] == EMPTY && board[bottom + 2][targetcol] == BLACK && board[bottom + 3][targetcol] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
             if (top - 3 >= 0 && board[top - 1][targetcol] == EMPTY && board[top - 2][targetcol] == BLACK && board[top - 3][targetcol] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
         }
         else if (colnum_up + colnum_down + 1 == 3) {
             int top = targetrow - colnum_up;
             int bottom = targetrow + colnum_down;
             if (bottom + 2 <= BOARDMAX && board[bottom + 1][targetcol] == EMPTY && board[bottom + 2][targetcol] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
             if (top - 2 >= 0 && board[top - 1][targetcol] == EMPTY && board[top - 2][targetcol] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
         }
     }
@@ -140,30 +145,30 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
         // 跳四 
         if (rownum_left + rownum_right + 1 == 1) {
             if (targetcol + 4 <= BOARDMAX && board[targetrow][targetcol + 1] == EMPTY && board[targetrow][targetcol + 2] == BLACK && board[targetrow][targetcol + 3] == BLACK && board[targetrow][targetcol + 4] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
             if (targetcol - 4 >= 0 && board[targetrow][targetcol - 1] == EMPTY && board[targetrow][targetcol - 2] == BLACK && board[targetrow][targetcol - 3] == BLACK && board[targetrow][targetcol - 4] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
         }
         else if (rownum_left + rownum_right + 1 == 2) {
             int left = targetcol - rownum_left;
             int right = targetcol + rownum_right;
             if (right + 3 <= BOARDMAX && board[targetrow][right + 1] == EMPTY && board[targetrow][right + 2] == BLACK && board[targetrow][right + 3] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
             if (left - 3 >= 0 && board[targetrow][left - 1] == EMPTY && board[targetrow][left - 2] == BLACK && board[targetrow][left - 3] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
         }
         else if (rownum_left + rownum_right + 1 == 3) {
             int left = targetcol - rownum_left;
             int right = targetcol + rownum_right;
             if (right + 2 <= BOARDMAX && board[targetrow][right + 1] == EMPTY && board[targetrow][right + 2] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
             if (left - 2 >= 0 && board[targetrow][left - 1] == EMPTY && board[targetrow][left - 2] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
         }
     }
@@ -224,30 +229,30 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
         int total = rightup + leftdown + 1;
         if (total == 1) {
             if (targetrow + 4 <= BOARDMAX && targetcol - 4 >= 0 && board[targetrow + 1][targetcol - 1] == EMPTY && board[targetrow + 2][targetcol - 2] == BLACK && board[targetrow + 3][targetcol - 3] == BLACK && board[targetrow + 4][targetcol - 4] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
             if (targetrow - 4 >= 0 && targetcol + 4 <= BOARDMAX && board[targetrow - 1][targetcol + 1] == EMPTY && board[targetrow - 2][targetcol + 2] == BLACK && board[targetrow - 3][targetcol + 3] == BLACK && board[targetrow - 4][targetcol + 4] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
         }
         else if (total == 2) {
             int hr = targetrow - rightup, hc = targetcol + rightup;
             int tr = targetrow + leftdown, tc = targetcol - leftdown;
             if (tr + 3 <= BOARDMAX && tc - 3 >= 0 && board[tr + 1][tc - 1] == EMPTY && board[tr + 2][tc - 2] == BLACK && board[tr + 3][tc - 3] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
             if (hr - 3 >= 0 && hc + 3 <= BOARDMAX && board[hr - 1][hc + 1] == EMPTY && board[hr - 2][hc + 2] == BLACK && board[hr - 3][hc + 3] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
         }
         else if (total == 3) {
             int hr = targetrow - rightup, hc = targetcol + rightup;
             int tr = targetrow + leftdown, tc = targetcol - leftdown;
             if (tr + 2 <= BOARDMAX && tc - 2 >= 0 && board[tr + 1][tc - 1] == EMPTY && board[tr + 2][tc - 2] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
             if (hr - 2 >= 0 && hc + 2 <= BOARDMAX && board[hr - 1][hc + 1] == EMPTY && board[hr - 2][hc + 2] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
         }
     }
@@ -308,30 +313,30 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
         int total = rightdown + leftup + 1;
         if (total == 1) {
             if (targetrow + 4 <= BOARDMAX && targetcol + 4 <= BOARDMAX && board[targetrow + 1][targetcol + 1] == EMPTY && board[targetrow + 2][targetcol + 2] == BLACK && board[targetrow + 3][targetcol + 3] == BLACK && board[targetrow + 4][targetcol + 4] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
             if (targetrow - 4 >= 0 && targetcol - 4 >= 0 && board[targetrow - 1][targetcol - 1] == EMPTY && board[targetrow - 2][targetcol - 2] == BLACK && board[targetrow - 3][targetcol - 3] == BLACK && board[targetrow - 4][targetcol - 4] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
         }
         else if (total == 2) {
             int hr = targetrow - leftup, hc = targetcol - leftup;
             int tr = targetrow + rightdown, tc = targetcol + rightdown;
             if (tr + 3 <= BOARDMAX && tc + 3 <= BOARDMAX && board[tr + 1][tc + 1] == EMPTY && board[tr + 2][tc + 2] == BLACK && board[tr + 3][tc + 3] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
             if (hr - 3 >= 0 && hc - 3 >= 0 && board[hr - 1][hc - 1] == EMPTY && board[hr - 2][hc - 2] == BLACK && board[hr - 3][hc - 3] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
         }
         else if (total == 3) {
             int hr = targetrow - leftup, hc = targetcol - leftup;
             int tr = targetrow + rightdown, tc = targetcol + rightdown;
             if (tr + 2 <= BOARDMAX && tc + 2 <= BOARDMAX && board[tr + 1][tc + 1] == EMPTY && board[tr + 2][tc + 2] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
             if (hr - 2 >= 0 && hc - 2 >= 0 && board[hr - 1][hc - 1] == EMPTY && board[hr - 2][hc - 2] == BLACK) {
-                blackchargefour++;
+                blackjumpfour++;
             }
         }
     }
@@ -382,30 +387,30 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
         // 跳四
         if (colnum_up + colnum_down + 1 == 1) {
             if (targetrow + 4 <= BOARDMAX && board[targetrow + 1][targetcol] == EMPTY && board[targetrow + 2][targetcol] == WHITE && board[targetrow + 3][targetcol] == WHITE && board[targetrow + 4][targetcol] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
             if (targetrow - 4 >= 0 && board[targetrow - 1][targetcol] == EMPTY && board[targetrow - 2][targetcol] == WHITE && board[targetrow - 3][targetcol] == WHITE && board[targetrow - 4][targetcol] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
         }
         else if (colnum_up + colnum_down + 1 == 2) {
             int top = targetrow - colnum_up;
             int bottom = targetrow + colnum_down;
             if (bottom + 3 <= BOARDMAX && board[bottom + 1][targetcol] == EMPTY && board[bottom + 2][targetcol] == WHITE && board[bottom + 3][targetcol] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
             if (top - 3 >= 0 && board[top - 1][targetcol] == EMPTY && board[top - 2][targetcol] == WHITE && board[top - 3][targetcol] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
         }
         else if (colnum_up + colnum_down + 1 == 3) {
             int top = targetrow - colnum_up;
             int bottom = targetrow + colnum_down;
             if (bottom + 2 <= BOARDMAX && board[bottom + 1][targetcol] == EMPTY && board[bottom + 2][targetcol] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
             if (top - 2 >= 0 && board[top - 1][targetcol] == EMPTY && board[top - 2][targetcol] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
         }
     }
@@ -455,30 +460,30 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
         // 跳四
         if (rownum_left + rownum_right + 1 == 1) {
             if (targetcol + 4 <= BOARDMAX && board[targetrow][targetcol + 1] == EMPTY && board[targetrow][targetcol + 2] == WHITE && board[targetrow][targetcol + 3] == WHITE && board[targetrow][targetcol + 4] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
             if (targetcol - 4 >= 0 && board[targetrow][targetcol - 1] == EMPTY && board[targetrow][targetcol - 2] == WHITE && board[targetrow][targetcol - 3] == WHITE && board[targetrow][targetcol - 4] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
         }
         else if (rownum_left + rownum_right + 1 == 2) {
             int left = targetcol - rownum_left;
             int right = targetcol + rownum_right;
             if (right + 3 <= BOARDMAX && board[targetrow][right + 1] == EMPTY && board[targetrow][right + 2] == WHITE && board[targetrow][right + 3] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
             if (left - 3 >= 0 && board[targetrow][left - 1] == EMPTY && board[targetrow][left - 2] == WHITE && board[targetrow][left - 3] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
         }
         else if (rownum_left + rownum_right + 1 == 3) {
             int left = targetcol - rownum_left;
             int right = targetcol + rownum_right;
             if (right + 2 <= BOARDMAX && board[targetrow][right + 1] == EMPTY && board[targetrow][right + 2] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
             if (left - 2 >= 0 && board[targetrow][left - 1] == EMPTY && board[targetrow][left - 2] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
         }
     }
@@ -536,30 +541,30 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
         int total = rightup + leftdown + 1;
         if (total == 1) {
             if (targetrow + 4 <= BOARDMAX && targetcol - 4 >= 0 && board[targetrow + 1][targetcol - 1] == EMPTY && board[targetrow + 2][targetcol - 2] == WHITE && board[targetrow + 3][targetcol - 3] == WHITE && board[targetrow + 4][targetcol - 4] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
             if (targetrow - 4 >= 0 && targetcol + 4 <= BOARDMAX && board[targetrow - 1][targetcol + 1] == EMPTY && board[targetrow - 2][targetcol + 2] == WHITE && board[targetrow - 3][targetcol + 3] == WHITE && board[targetrow - 4][targetcol + 4] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
         }
         else if (total == 2) {
             int hr = targetrow - rightup, hc = targetcol + rightup;
             int tr = targetrow + leftdown, tc = targetcol - leftdown;
             if (tr + 3 <= BOARDMAX && tc - 3 >= 0 && board[tr + 1][tc - 1] == EMPTY && board[tr + 2][tc - 2] == WHITE && board[tr + 3][tc - 3] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
             if (hr - 3 >= 0 && hc + 3 <= BOARDMAX && board[hr - 1][hc + 1] == EMPTY && board[hr - 2][hc + 2] == WHITE && board[hr - 3][hc + 3] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
         }
         else if (total == 3) {
             int hr = targetrow - rightup, hc = targetcol + rightup;
             int tr = targetrow + leftdown, tc = targetcol - leftdown;
             if (tr + 2 <= BOARDMAX && tc - 2 >= 0 && board[tr + 1][tc - 1] == EMPTY && board[tr + 2][tc - 2] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
             if (hr - 2 >= 0 && hc + 2 <= BOARDMAX && board[hr - 1][hc + 1] == EMPTY && board[hr - 2][hc + 2] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
         }
     }
@@ -617,30 +622,30 @@ void fourcheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol) {
         int total = rightdown + leftup + 1;
         if (total == 1) {
             if (targetrow + 4 <= BOARDMAX && targetcol + 4 <= BOARDMAX && board[targetrow + 1][targetcol + 1] == EMPTY && board[targetrow + 2][targetcol + 2] == WHITE && board[targetrow + 3][targetcol + 3] == WHITE && board[targetrow + 4][targetcol + 4] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
             if (targetrow - 4 >= 0 && targetcol - 4 >= 0 && board[targetrow - 1][targetcol - 1] == EMPTY && board[targetrow - 2][targetcol - 2] == WHITE && board[targetrow - 3][targetcol - 3] == WHITE && board[targetrow - 4][targetcol - 4] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
         }
         else if (total == 2) {
             int hr = targetrow - leftup, hc = targetcol - leftup;
             int tr = targetrow + rightdown, tc = targetcol + rightdown;
             if (tr + 3 <= BOARDMAX && tc + 3 <= BOARDMAX && board[tr + 1][tc + 1] == EMPTY && board[tr + 2][tc + 2] == WHITE && board[tr + 3][tc + 3] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
             if (hr - 3 >= 0 && hc - 3 >= 0 && board[hr - 1][hc - 1] == EMPTY && board[hr - 2][hc - 2] == WHITE && board[hr - 3][hc - 3] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
         }
         else if (total == 3) {
             int hr = targetrow - leftup, hc = targetcol - leftup;
             int tr = targetrow + rightdown, tc = targetcol + rightdown;
             if (tr + 2 <= BOARDMAX && tc + 2 <= BOARDMAX && board[tr + 1][tc + 1] == EMPTY && board[tr + 2][tc + 2] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
             if (hr - 2 >= 0 && hc - 2 >= 0 && board[hr - 1][hc - 1] == EMPTY && board[hr - 2][hc - 2] == WHITE) {
-                whitechargefour++;
+                whitejumpfour++;
             }
         }
     }

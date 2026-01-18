@@ -1,13 +1,13 @@
 #检测操作系统
 ifeq ($(OS), Windows_NT)
-    # Windows 环境
+    # Windows环境
     PLATFORM = Windows
     RM = del /q /f
     TARGET = gomoku.exe
-    # 将路径中的 / 替换为 \ 兼容 Windows 原生命令
+    # 将路径中的/替换为\兼容Windows命令
     FIX_PATH = $(subst /,\,$1)
 else
-    # Linux 或 macOS 环境
+    # Linux环境
     PLATFORM = Linux
     RM = rm -f
     TARGET = gomoku
@@ -41,10 +41,8 @@ OBJS = Main/main.o \
 #编译规则
 all: $(TARGET)
 	@echo "编译成功，生成可执行文件: $(TARGET)"
-
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $(TARGET)
-
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
