@@ -89,4 +89,4 @@
 
 ---------------------------------------
 
-*开发过程，Debug记录可见`Devdairy_Gomoku.txt`*<br>
+*开发过程，Debug记录可见`Devdairy_Gomoku.txt`<br>
