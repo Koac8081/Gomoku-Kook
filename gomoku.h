@@ -37,7 +37,7 @@
 #define JUMPFOUR 10000 //打分时跳四的分数
 #define CHARGEFOUR 15000 //打分时冲四的分数
 #define DEFENDFACTOR 1 //防御分的权重
-#define NEIGHBORSCORE 20 //紧贴棋子的加分
+#define NEIGHBORSCORE 0 //紧贴棋子的加分
 
 #define NOTBAN 0 //不是黑棋禁手
 #define BAN 1 //是黑棋禁手
