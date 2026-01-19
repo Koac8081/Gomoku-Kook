@@ -50,7 +50,7 @@ void boardprint(int board[BOARDSIZE][BOARDSIZE],int row,char col){//使用了助
         printf(" %c", 'A' + i);
     }
     printf("\n");
-    if(goinger == BLACKGO){
+    if(goinger == BLACKGO){//最近一步落下棋子的位置提示
         printf("黑棋落子在:%d %c\n",row,col);
     }
     else{

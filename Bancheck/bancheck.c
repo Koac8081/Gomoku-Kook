@@ -11,7 +11,7 @@ void bancheck(int ban[BOARDSIZE][BOARDSIZE],int board[BOARDSIZE][BOARDSIZE]){ //
             threecheck(board,i,j);
             fourcheck(board,i,j);
             fivepluscheck(board,i,j); //先检查棋型
-            if((blacklivethree + blackjumpthree) > 1 || (blacklivefour + blackchargefour) > 1 || blackfiveplus >= 1){//双活三，双四，长连
+            if((blacklivethree + blackjumpthree) > 1 || (blacklivefour + blackchargefour + blackjumpfour) > 1 || blackfiveplus >= 1){//双活三，双四，长连
                 ban[i][j] = BAN;
             }
         }

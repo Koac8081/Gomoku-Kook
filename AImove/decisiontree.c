@@ -3,11 +3,11 @@
 #include<stdio.h>
 #include"../gomoku.h"
 
-int decisiontree(int depth, int decider, int currenttotal) {
+int decisiontree(int depth, int decider, int currenttotal){ //currenttotal是该路径目前的累加总分
     if(depth <= 0){
         return currenttotal;
     } //递归终点，depth 为 0 时才停止
-    BestPoint choices[BESTNUM];
+    BestPoint choices[BESTNUM]; //候选点
     mark(board, ban, decider, blackscore, whitescore); //进行打分
     int num = findtopscore(decider, blackscore, whitescore, choices);
     if(num == 0){

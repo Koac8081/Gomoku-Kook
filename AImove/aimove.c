@@ -6,7 +6,7 @@
 Move aimove(){
     mark(board, ban, aimode, blackscore, whitescore); //扫描局面获取候选点
     BestPoint firstchoices[BESTNUM];
-    int num = findtopscore(aimode, blackscore, whitescore, firstchoices);
+    int num = findtopscore(aimode, blackscore, whitescore, firstchoices); //调用findtopscore找出候选点
     if(num == 0){
         return (Move){-1, -1};
     } //如果无处可下，返回无效坐标
@@ -14,7 +14,7 @@ Move aimove(){
     int finalcol = firstchoices[0].col;
     int bestval = (aimode == BLACK) ? -BASE : BASE;
     //遍历候选点并进入决策树预测
-    for (int i = 0; i < num; i++){
+    for (int i = 0; i < num; i++){//以找到的五个候选点为根节点，依次遍历搜索树
         int r = firstchoices[i].row;
         int c = firstchoices[i].col;
         int gain = firstchoices[i].score;

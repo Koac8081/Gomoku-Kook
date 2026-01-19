@@ -7,34 +7,34 @@
 
 ## 2.关于程序使用方法
 
-### 2.1 Linux环境下：
+### 2.1 Linux（bash）环境下：
 在终端输入：<br>
-make<br>
+**make**<br>
 
 若编译成功，终端应显示：<br>
-编译成功，生成可执行文件：gomoku<br>
+**编译成功，生成可执行文件：gomoku**<br>
 
 在终端输入：<br>
-./gomoku<br>
+**./gomoku**<br>
 运行游戏；游戏的进行在游戏内有详细提示<br>
 
 在终端输入：<br>
-make clean<br>
+**make clean**<br>
 清除所有编译文件<br>
 
-### 2.2 Windows环境下：
+### 2.2 Windows（powershell）环境下：
 在终端输入：<br>
-make<br>
+**make**<br>
 
 若编译成功，终端应显示：<br>
-编译成功，生成可执行文件：gomoku.exe<br>
+**编译成功，生成可执行文件：gomoku.exe**<br>
 
 在终端输入：<br>
-.\gomoku<br>
+**.\gomoku**<br>
 或点击可执行文件`gomoku.exe`来运行游戏；游戏的进行在游戏内有详细提示<br>
 
 在终端输入：<br>
-make clean<br>
+**make clean**<br>
 清除所有编译文件<br>
 
 ---------------------------------------
