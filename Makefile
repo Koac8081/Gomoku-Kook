@@ -21,6 +21,7 @@ CFLAGS = -I. -Wall -g
 #对象文件列表
 OBJS = Main/main.o \
        Main/screenclean.o \
+       Main/gamemodes.o \
        Bancheck/bancheck.o \
        Boardprint/boardprint.o \
        Boardprint/boardreset.o \
