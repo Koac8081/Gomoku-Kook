@@ -1,7 +1,5 @@
 //选择不同模式后的游戏进行
 
-#include<stdio.h>
-#include<stdlib.h>
 #include"../gomoku.h"
 
 void pvemode(){//pve模式
@@ -282,9 +280,9 @@ void debugmode(){//debug模式
             printf("您选择了Debug模式\n");
             aimode = BLACK;
             printf("棋局开始\n");
-            emptyboardprint(board);
             while(gamestate == UNDERWAY){
             while(1){//开发者使用，不考虑输入错误
+            emptyboardprint(board);
             printf("请输入坐标,查看对此处的判断情况；输入“0 任意字母”退出查看\n");
             scanf("%d %c",&row,&col);
             if(row == 0){

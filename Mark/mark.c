@@ -1,6 +1,5 @@
 //对棋盘上每点进行打分，找出下一步的最优点
 
-#include<stdio.h>
 #include"../gomoku.h"
 
 void mark(int board[BOARDSIZE][BOARDSIZE],int ban[BOARDSIZE][BOARDSIZE],int aimode,int blackscore[BOARDSIZE][BOARDSIZE],int whitescore[BOARDSIZE][BOARDSIZE]){//初版只对决策方打分，但是考虑到博弈树，对双方都应打分；注意到函数体没有用到aimode这个变量，因为该函数是在决策树之前完成的，当时用于逐方打分

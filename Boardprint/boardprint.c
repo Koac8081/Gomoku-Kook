@@ -1,5 +1,5 @@
 //棋盘的打印和更新
-#include<stdio.h>
+
 #include"../gomoku.h"
 
 void boardprint(int board[BOARDSIZE][BOARDSIZE],int row,char col){//使用了助教提供的棋盘打印函数，稍作修改

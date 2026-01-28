@@ -1,6 +1,5 @@
 //检查某处活三，眠三的函数
 
-#include <stdio.h>
 #include "../gomoku.h"
 
 int blacklivethree; //黑棋活三

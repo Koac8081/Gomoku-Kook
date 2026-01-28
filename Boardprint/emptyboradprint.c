@@ -1,5 +1,5 @@
-//打印空棋盘
-#include<stdio.h>
+//打印不带落子提示的棋盘
+
 #include"../gomoku.h"
 
 void emptyboardprint(int board[BOARDSIZE][BOARDSIZE]){

@@ -1,6 +1,5 @@
 // AI 最终决策
 
-#include<stdio.h>
 #include"../gomoku.h"
 
 Move aimove(){

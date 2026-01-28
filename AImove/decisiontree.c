@@ -1,6 +1,5 @@
 // 决策树
 
-#include<stdio.h>
 #include"../gomoku.h"
 
 int decisiontree(int depth, int decider, int currenttotal){ //currenttotal是该路径目前的累加总分

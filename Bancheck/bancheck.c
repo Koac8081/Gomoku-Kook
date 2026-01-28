@@ -1,6 +1,5 @@
 //判断棋盘上每点是否为禁手
 
-#include<stdio.h>
 #include"../gomoku.h"
 
 void bancheck(int ban[BOARDSIZE][BOARDSIZE],int board[BOARDSIZE][BOARDSIZE]){ //利用之前的棋型检查函数即可

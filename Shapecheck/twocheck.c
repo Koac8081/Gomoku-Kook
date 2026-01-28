@@ -1,5 +1,5 @@
 // 关于二连的判断
-#include <stdio.h>
+
 #include "../gomoku.h"
 
 int blacklivetwo; //黑棋活二

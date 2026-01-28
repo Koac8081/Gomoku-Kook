@@ -1,6 +1,5 @@
 // 为决策寻找重要性最高的空位
 
-#include<stdio.h>
 #include"../gomoku.h"
 
 int findtopscore(int decider, int blackscore[BOARDSIZE][BOARDSIZE], int whitescore[BOARDSIZE][BOARDSIZE], BestPoint candidates[BESTNUM]){

@@ -1,6 +1,5 @@
 //为决策树使用的wincheck
 
-#include<stdio.h>
 #include"../gomoku.h"
 
 int wincheckforai(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,int col){//此函数目前没有参与实际程序

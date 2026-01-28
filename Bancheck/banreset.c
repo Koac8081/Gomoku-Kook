@@ -1,6 +1,5 @@
 //重置禁手判断
 
-#include<stdio.h>
 #include"../gomoku.h"
 
 void banreset(int ban[BOARDSIZE][BOARDSIZE]){

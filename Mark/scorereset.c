@@ -1,6 +1,5 @@
 //重置棋盘分数
 
-#include<stdio.h>
 #include"../gomoku.h"
 
 void scorereset(int score[BOARDSIZE][BOARDSIZE]){

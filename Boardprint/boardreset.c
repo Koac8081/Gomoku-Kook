@@ -1,5 +1,5 @@
 //棋盘重置
-#include<stdio.h>
+
 #include"../gomoku.h"
 
 int board[BOARDSIZE][BOARDSIZE];

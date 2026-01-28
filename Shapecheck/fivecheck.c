@@ -1,5 +1,5 @@
 //检查下在此处，可形成的五连数
-#include<stdio.h>
+
 #include"../gomoku.h"
 
 int blackfive = 0; //黑棋连五

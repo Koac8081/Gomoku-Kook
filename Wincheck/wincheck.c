@@ -1,5 +1,5 @@
 //检查是否有一方胜利或平局
-#include<stdio.h>
+
 #include"../gomoku.h"
 
 void wincheck(int board[BOARDSIZE][BOARDSIZE],int goinger,int row,char col,int blackstep,int whitestep){

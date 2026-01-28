@@ -135,3 +135,6 @@ int findtopscore(int decider, int blackscore[BOARDSIZE][BOARDSIZE], int whitesco
     #include <unistd.h>
     #define wait(x) usleep((x) * 1000) //linux下的等待固定时间
 #endif
+
+#include <stdio.h> //引用标准库
+#include <stdlib.h>

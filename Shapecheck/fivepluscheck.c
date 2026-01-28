@@ -1,6 +1,5 @@
 //用于判断下在此处可形成的长连数
 
-#include<stdio.h>
 #include"../gomoku.h"
 
 int blackfiveplus = 0; //黑棋长连

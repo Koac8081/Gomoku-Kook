@@ -1,6 +1,5 @@
 //检查下在此处是否能形成活四,冲四
 
-#include <stdio.h>
 #include "../gomoku.h"
 
 int blacklivefour = 0; //黑棋活四数

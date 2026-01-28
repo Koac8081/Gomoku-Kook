@@ -1,5 +1,5 @@
 //使用清屏命令清理屏幕
-#include<stdlib.h>
+
 #include"../gomoku.h"
 
 void screenclean(){
