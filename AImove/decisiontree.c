@@ -15,10 +15,10 @@ int decisiontree(int depth, int decider, int currenttotal){ //currenttotal是该
     if(decider == BLACK){
         int maxscore = -BASE; //防止 maxscore 无法被更新
         for(int i = 0; i < num; i++){
-            int r = choices[i].row;
-            int c = choices[i].col;
-            int gain = choices[i].score;
-            board[r][c] = BLACK;
+            int r = choices[i].row; //横坐标
+            int c = choices[i].col; //纵坐标
+            int gain = choices[i].score; //加分
+            board[r][c] = BLACK; //模拟落子
             //胜负判定
             /*if (wincheckforai(board, BLACKGO, r, c) == BLACKWIN) {
                 board[r][c] = EMPTY;
@@ -26,7 +26,7 @@ int decisiontree(int depth, int decider, int currenttotal){ //currenttotal是该
             } */ //引入胜负判定后，AI会在成五那一手上出问题，暂时放弃
             int val = decisiontree(depth - 1, WHITE, currenttotal + gain); //递归：黑棋落子，currenttotal 增加 gain
             board[r][c] = EMPTY; 
-            if(val > maxscore){
+            if(val > maxscore){ //更新最高分
                 maxscore = val;
             }
         }

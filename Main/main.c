@@ -23,9 +23,9 @@ int main(){
         screenclean();
         boardreset(board);//重置棋盘
         banreset(ban);//重置黑棋禁手判断
-        banreset(tempban);
-        scorereset(blackscore);//重置打分
-        scorereset(whitescore);
+        banreset(tempban);//重置临时禁手
+        scorereset(blackscore);//重置黑棋打分
+        scorereset(whitescore);//重置白棋打分
         gamestate = UNDERWAY;//将游戏状态置为进行中
         blackstep = 0;//重置黑棋步数
         whitestep = 0;//重置白棋步数

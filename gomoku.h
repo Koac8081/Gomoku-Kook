@@ -130,7 +130,7 @@ void threecheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //
 void twocheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol); //检查下在此处的活二，眠二数
 
 void scorereset(int score[BOARDSIZE][BOARDSIZE]); //重置棋盘分数
-void mark(int board[BOARDSIZE][BOARDSIZE],int ban[BOARDSIZE][BOARDSIZE],int aimode,int blackscore[BOARDSIZE][BOARDSIZE],int whitescore[BOARDSIZE][BOARDSIZE]); //对棋盘上每点进行打分，找出下一步最优解
+void mark(int board[BOARDSIZE][BOARDSIZE],int ban[BOARDSIZE][BOARDSIZE],int aimode,int blackscore[BOARDSIZE][BOARDSIZE],int whitescore[BOARDSIZE][BOARDSIZE]); //对棋盘上每个空位进行打分，找出下一步最优解
 
 void banreset(int ban[BOARDSIZE][BOARDSIZE]); //重置禁手判断
 void bancheck(int ban[BOARDSIZE][BOARDSIZE],int board[BOARDSIZE][BOARDSIZE]); //判断棋盘上每点是否为禁手

@@ -68,7 +68,7 @@ void pvemode(){//pve模式
             wincheck(board,goinger,row,col,blackstep,whitestep);//胜利检查
             if(gamestate == BLACKWIN){
                 printf("玩家胜利！\n即将重新开始游戏\n");
-                wait(10000);
+                wait(10000); //如果不加等待，一方胜利后会直接回到大循环开头清屏，看不到哪方胜利；由于可维护性没有做好在一方胜利后加上类似于前面的读取输入又太过麻烦
                 return;
             }
             else if(gamestate == PEACE){
@@ -91,11 +91,11 @@ void pvemode(){//pve模式
                     Move aiaction = aimove();
                     row = BOARDSIZE - aiaction.x;
                     col = aiaction.y + 'A';
-                }
+                } //第一手后正常调用ai
             screenclean();
-            boardprint(board,row,col);
-            whitestep ++;
-            wincheck(board,goinger,row,col,blackstep,whitestep);
+            boardprint(board,row,col); //打印棋盘
+            whitestep ++; //白棋下完一步，增加步数
+            wincheck(board,goinger,row,col,blackstep,whitestep); //胜利检查
             if(gamestate == WHITEWIN){
                 printf("AI胜利！\n即将重新开始游戏\n");
                 wait(10000);
@@ -105,7 +105,7 @@ void pvemode(){//pve模式
                 printf("平局！\n即将重新开始游戏\n");
                 wait(10000);
                 return;
-            }
+            } //白棋下完不可能导致黑棋胜利，不检查黑棋
             bancheck(tempban,board);//由于棋型检查只能检查棋盘空位，导致相关的函数也都只能检查棋盘空位；这里在白棋下完一手后检查哪里是禁手，再在黑棋下完一手后对比
         }
     }

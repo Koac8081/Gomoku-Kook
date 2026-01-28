@@ -14,12 +14,12 @@ Move aimove(){
     int bestval = (aimode == BLACK) ? -BASE : BASE;
     //遍历候选点并进入决策树预测
     for (int i = 0; i < num; i++){//以找到的五个候选点为根节点，依次遍历搜索树
-        int r = firstchoices[i].row;
-        int c = firstchoices[i].col;
-        int gain = firstchoices[i].score;
-        board[r][c] = aimode;
-        int initialscore = (aimode == BLACK) ? gain : -gain;
-        int val = decisiontree(LEVEL - 1, 3 - aimode, initialscore);
+        int r = firstchoices[i].row; //横坐标
+        int c = firstchoices[i].col; //纵坐标
+        int gain = firstchoices[i].score; //加分
+        board[r][c] = aimode; //根据决策方落子
+        int initialscore = (aimode == BLACK) ? gain : -gain; //黑棋加分，白棋减分
+        int val = decisiontree(LEVEL - 1, 3 - aimode, initialscore); //当前候选点的分数
         board[r][c] = EMPTY; //回溯，此时只是虚拟落子
         //比较并保留最优路径
         if(aimode == BLACK){

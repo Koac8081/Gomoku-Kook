@@ -27,7 +27,7 @@ void threecheck(int board[BOARDSIZE][BOARDSIZE], int targetrow, int targetcol){
         int dr[] = {1, 0, 1, 1}; //纵，横，135°-315°，45°-225°
         int dc[] = {0, 1, 1, -1}; //同上
 
-        for(int d = 0; d < 4; d++){
+        for(int d = 0; d < 4; d++){ //遍历方向
             int r = dr[d], c = dc[d];
 
             //统计紧邻的连子数

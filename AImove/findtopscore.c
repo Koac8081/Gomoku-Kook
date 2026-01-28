@@ -13,9 +13,9 @@ int findtopscore(int decider, int blackscore[BOARDSIZE][BOARDSIZE], int whitesco
             //int current_val = (decider == BLACK) ? blackscore[i][j] : whitescore[i][j];这是之前的思路，白方从白方分表里找，黑方从黑方分表里找
             //如果当前点比候选名单里最弱的一个强
             if(current_val > candidates[BESTNUM - 1].score){
-                candidates[BESTNUM - 1].row = i;
-                candidates[BESTNUM - 1].col = j;
-                candidates[BESTNUM - 1].score = current_val;
+                candidates[BESTNUM - 1].row = i; //横坐标
+                candidates[BESTNUM - 1].col = j; //纵坐标
+                candidates[BESTNUM - 1].score = current_val; 
                 //冒泡排序，把最高分排在candidates[0]
                 for(int m = BESTNUM - 1; m > 0; m--){
                     if (candidates[m].score > candidates[m - 1].score) {

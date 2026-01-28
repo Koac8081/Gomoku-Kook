@@ -13,7 +13,7 @@ void fivecheck(int board[BOARDSIZE][BOARDSIZE],int targetrow,int targetcol){//�
     if(target == BLACK){//黑棋检索
         //先纵向检索
         int colnum_up = 0;//向上连子数
-        while(1){
+        while(1){ //碰到空位，异色棋子，边界前循环增加连子数
             if(targetrow - colnum_up - 1 >= 0 && board[targetrow - colnum_up - 1][targetcol] == BLACK){
             colnum_up ++;
             }
