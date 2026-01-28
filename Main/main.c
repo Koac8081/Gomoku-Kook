@@ -31,7 +31,7 @@ int main(){
         whitestep = 0;//重置白棋步数
         printf("游戏开始\n");
         printf("请选择模式：\n1.PVP\n2.PVE\n3.Debug模式\n输入“1”选择PVP模式,输入“2”选择PVE模式,输入“3”选择Debug模式\n输入“4”退出\n");
-        printf("提示:“▲”代表黑棋,“◎ ”代表白棋\n");
+        printf("提示:“▲”代表黑棋,“◎ ”代表白棋；按下“Ctrl + C”以在游戏途中退出\n");
         while(1){//游戏模式选择
             if(scanf("%d",&gamemode) == 1){//输入及合法性检测
                 if(gamemode == PVE || gamemode == PVP || gamemode == DEBUG){

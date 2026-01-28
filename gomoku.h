@@ -1,4 +1,15 @@
-#pragma once//头文件开头要加的一句
+#pragma once//避免编译时的重复处理
+
+#ifdef _WIN32 //关于等待时间的处理
+    #include <windows.h>
+    #define wait(x) Sleep(x) //windows下的等待固定时间
+#else
+    #include <unistd.h>
+    #define wait(x) usleep((x) * 1000) //linux下的等待固定时间
+#endif
+
+#include <stdio.h> //引用标准库
+#include <stdlib.h>
 
 #define EMPTY 0 //棋盘空位
 #define WHITE 1 //白棋
@@ -127,14 +138,3 @@ void bancheck(int ban[BOARDSIZE][BOARDSIZE],int board[BOARDSIZE][BOARDSIZE]); //
 Move aimove(); //AI决策
 int decisiontree(int depth, int decider, int currenttotal); //决策树
 int findtopscore(int decider, int blackscore[BOARDSIZE][BOARDSIZE], int whitescore[BOARDSIZE][BOARDSIZE], BestPoint candidates[BESTNUM]); //找到若干个得分最高的点，供决策树选择
-
-#ifdef _WIN32 //关于等待时间的处理
-    #include <windows.h>
-    #define wait(x) Sleep(x) //windows下的等待固定时间
-#else
-    #include <unistd.h>
-    #define wait(x) usleep((x) * 1000) //linux下的等待固定时间
-#endif
-
-#include <stdio.h> //引用标准库
-#include <stdlib.h>
