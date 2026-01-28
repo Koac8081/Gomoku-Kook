@@ -100,6 +100,8 @@ extern int whitescore[BOARDSIZE][BOARDSIZE]; //棋盘上一点白棋的分数
 extern int ban[BOARDSIZE][BOARDSIZE]; //棋盘上一点是否为黑方禁手
 extern int tempban[BOARDSIZE][BOARDSIZE]; //记录上一步下完哪里是禁手
 
+void screenclean(); //清屏指令
+
 void boardprint(int board[BOARDSIZE][BOARDSIZE],int row,char col); //棋盘打印及更新
 void boardreset(int board[BOARDSIZE][BOARDSIZE]); //重置棋盘
 void emptyboardprint(int board[BOARDSIZE][BOARDSIZE]); //打印空棋盘

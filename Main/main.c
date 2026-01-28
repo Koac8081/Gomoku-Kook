@@ -1,6 +1,14 @@
 //主函数
 #include<stdio.h>
+#include<stdlib.h>
 #include"../gomoku.h"
+#ifdef _WIN32
+    #include <windows.h>
+    #define wait(x) Sleep(x) //windows下的等待固定时间
+#else
+    #include <unistd.h>
+    #define wait(x) usleep((x) * 1000) //linux下的等待固定时间
+#endif
 
 int gamestate;
 int gamemode;
@@ -20,6 +28,7 @@ int aimode; //初始化一些全局变量
 
 int main(){
     while(1){
+        screenclean();
         boardreset(board);//重置棋盘
         banreset(ban);//重置黑棋禁手判断
         banreset(tempban);
@@ -51,24 +60,29 @@ int main(){
         }
         }
         if(gamemode == PVE){//PVE游戏进行
+            screenclean();
             printf("您选择了PVE模式\n");
             printf("请选择您要成为黑方或白方:输入“1”使用黑棋进行游戏,输入“2”使用白棋进行游戏\n");
             while(1){//PVE黑白棋选择
                 if(scanf("%d",&playerchose) == 1){//输入检测及合法性检查
                     if(playerchose == PLAYERCHOSEBLACK){
+                        screenclean();
                         printf("您选择了黑方\n");
                         break;
                     }
                     else if(playerchose == PLAYERCHOSEWHITE){
+                        screenclean();
                         printf("您选择了白方\n");
                         break;
                     }
                     else{
+                        screenclean();
                         printf("您输入了“1”或“2”以外的其他数字,请重新输入!\n");
                         continue;
                     }
                 }
                 else{
+                    screenclean();
                     printf("输入格式错误,请重新输入!\n");
                     while(getchar() != '\n');
                 }
@@ -97,7 +111,9 @@ int main(){
                     while(getchar() != '\n');
                 }
             }
+            screenclean();
             boardprint(board,row,col);
+            printf("AI决策中...\n");
             blackstep++;
             for(int i = 0;i < BOARDSIZE;i++){//下面提到的对比，检查黑棋下的这一手是不是禁手
                 for(int j = 0;j <BOARDSIZE;j++){
@@ -108,15 +124,18 @@ int main(){
             }
             wincheck(board,goinger,row,col,blackstep,whitestep);//胜利检查
             if(gamestate == BLACKWIN){
-                printf("玩家胜利！\n重新开始游戏\n");
+                printf("玩家胜利！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             else if(gamestate == PEACE){
-                printf("平局！\n重新开始游戏\n");
+                printf("平局！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             else if(gamestate == WHITEWIN){
-                printf("玩家下出禁手，AI胜利！\n重新开始游戏\n");
+                printf("玩家下出禁手，AI胜利！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             goinger = WHITE;
@@ -130,15 +149,18 @@ int main(){
                     row = BOARDSIZE - aiaction.x;
                     col = aiaction.y + 'A';
                 }
+            screenclean();
             boardprint(board,row,col);
             whitestep ++;
             wincheck(board,goinger,row,col,blackstep,whitestep);
             if(gamestate == WHITEWIN){
-                printf("AI胜利！\n重新开始游戏\n");
+                printf("AI胜利！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             else if(gamestate == PEACE){
-                printf("平局！\n重新开始游戏\n");
+                printf("平局！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             bancheck(tempban,board);//由于棋型检查只能检查棋盘空位，导致相关的函数也都只能检查棋盘空位；这里在白棋下完一手后检查哪里是禁手，再在黑棋下完一手后对比
@@ -170,15 +192,18 @@ int main(){
                     row = BOARDSIZE - aiaction.x;
                     col = aiaction.y + 'A';
                 }
+                 screenclean();
                  boardprint(board,row,col);
                  blackstep ++;
                  wincheck(board,goinger,row,col,blackstep,whitestep);
                  if(gamestate == BLACKWIN){
-                    printf("AI胜利！\n重新开始游戏\n");
+                    printf("AI胜利！\n即将重新开始游戏\n");
+                    wait(10000);
                     break;
                  }
                  else if(gamestate == PEACE){
-                    printf("平局！\n重新开始游戏\n");
+                    printf("平局！\n即将重新开始游戏\n");
+                    wait(10000);
                     break;
                  }
                     printf("请玩家落子-输入“行 列”,其中行为1-15的数字,列为A-O的大写字母\n");
@@ -200,21 +225,26 @@ int main(){
                     while(getchar() != '\n');
                 }
             }
+            screenclean();
             boardprint(board,row,col);
+            printf("AI决策中...\n");
             whitestep++;
             wincheck(board,goinger,row,col,blackstep,whitestep);
             if(gamestate == WHITEWIN){
-                printf("玩家胜利！\n重新开始游戏\n");
+                printf("玩家胜利！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             else if(gamestate == PEACE){
-                printf("平局！\n重新开始游戏\n");
+                printf("平局！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
         }
             }
         }
         if(gamemode == PVP){//PVP游戏进行；与PVE差别不大，不再重复注释
+            screenclean();
             printf("您选择了PVP模式\n");
             printf("棋局开始\n");
             emptyboardprint(board);
@@ -238,6 +268,7 @@ int main(){
                     while(getchar() != '\n');
                 }
             }
+            screenclean();
             boardprint(board,row,col);
             blackstep++;
             for(int i = 0;i < BOARDSIZE;i++){
@@ -249,15 +280,18 @@ int main(){
             }
             wincheck(board,goinger,row,col,blackstep,whitestep);
             if(gamestate == BLACKWIN){
-                printf("黑方胜利！\n重新开始游戏\n");
+                printf("黑方胜利！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             else if(gamestate == WHITEWIN){
-                printf("黑方下出禁手，白方胜利！\n重新开始游戏\n");
+                printf("黑方下出禁手，白方胜利！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             else if(gamestate == PEACE){
-                printf("平局！\n重新开始游戏\n");
+                printf("平局！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             printf("请白方落子-输入“行 列”,其中行为1-15的数字,列为A-O的大写字母\n");
@@ -279,21 +313,25 @@ int main(){
                     while(getchar() != '\n');
                 }
             }
+            screenclean();
             boardprint(board,row,col);
             whitestep++;
             wincheck(board,goinger,row,col,blackstep,whitestep);
             if(gamestate == WHITEWIN){
-                printf("白方胜利！\n重新开始游戏\n");
+                printf("白方胜利！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             else if(gamestate == PEACE){
-                printf("平局！\n重新开始游戏\n");
+                printf("平局！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             bancheck(tempban,board);
         }
         }
         if(gamemode == DEBUG){//Debug模式，显示对棋型的判断
+            screenclean();
             printf("您选择了Debug模式\n");
             aimode = BLACK;
             printf("棋局开始\n");
@@ -342,6 +380,8 @@ int main(){
             printf("黑棋长连:%d  ",blackfiveplus);
             printf("白棋长连:%d\n",whitefiveplus);//显示各种数据
     }
+    screenclean();
+    emptyboardprint(board);
         printf("请黑方落子-输入“行 列”,其中行为1-15的数字,列为A-O的大写字母\n");
         printf("当前黑棋已落%d子,白棋已落%d子\n",blackstep,whitestep);
             while(1){//黑方落子
@@ -361,15 +401,18 @@ int main(){
                     while(getchar() != '\n');
                 }
             }
+            screenclean();
             boardprint(board,row,col);
             blackstep++;
             wincheck(board,goinger,row,col,blackstep,whitestep);
             if(gamestate == BLACKWIN){
-                printf("黑方胜利！\n重新开始游戏\n");
+                printf("黑方胜利！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             else if(gamestate == PEACE){
-                printf("平局！\n重新开始游戏\n");
+                printf("平局！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             printf("请白方落子-输入“行 列”,其中行为1-15的数字,列为A-O的大写字母\n");
@@ -391,15 +434,18 @@ int main(){
                     while(getchar() != '\n');
                 }
             }
+            screenclean();
             boardprint(board,row,col);
             whitestep++;
             wincheck(board,goinger,row,col,blackstep,whitestep);
             if(gamestate == WHITEWIN){
-                printf("白方胜利！\n重新开始游戏\n");
+                printf("白方胜利！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
             else if(gamestate == PEACE){
-                printf("平局！\n重新开始游戏\n");
+                printf("平局！\n即将重新开始游戏\n");
+                wait(10000);
                 break;
             }
     }
